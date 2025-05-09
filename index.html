@@ -76,8 +76,8 @@
             document.getElementById("heading").innerHTML += "<sup><small> dev</small></sup>";
         }
         else{
-            document.title += " v1.23";
-            document.getElementById("heading").innerHTML += "<sup><small> version 1.23</small></sup>";
+            document.title += " v1.23.1";
+            document.getElementById("heading").innerHTML += "<sup><small> version 1.23.1</small></sup>";
         }
         // Handle Activity Indicator, Set some variables top of page.
         let lastWorldScoped = "N/A";
@@ -110,8 +110,8 @@
         </div>
     </div>
 
-        <!-- Textbox for user input -->
-        <!-- This may be phased out in the future -->
+    <!-- Textbox for user input -->
+    <!-- This may be phased out in the future -->
     <div id="inputContainer">
         <label for="csvInput">Enter text in DSV format using a semicolon ; as follows: <sup>World<sub>;</sub>Transcript</sup></label>
         <br />
@@ -354,7 +354,7 @@
             let size_of_star = "ERROR-UNDEF-SIZE";
             if(inputphrase.substring(size_text_startIndex).indexOf("size") === 1){
                 // Tier 3 telescope
-                size_of_star = parseInt(inputphrase.substring(size_text_startIndex+5), 10);
+                size_of_star = parseInt(replaceOCRN(inputphrase.substring(size_text_startIndex+5)), 10);
             }
             else {
                 // if ladder to find size text
@@ -581,7 +581,7 @@
             }, 0); // Delay of 0 milliseconds to ensure it runs after 
         }
         function setOnPastePlaceholder(){
-            document.getElementById("expInput").placeholder = "PASTE AREA, Paste here!                                                    ​                                                   ​                                                   You see a shooting star! ... ... looks to be size 10. Friends List RuneScape 39";
+            document.getElementById("expInput").placeholder = "PASTE AREA, Paste here!                                                                                  You see a shooting star! ... ... looks to be size 10. Friends List RuneScape 39";
         }
         //========================== BUTTONS_&_TEXTBOXES_END
         
