@@ -76,8 +76,8 @@
             document.getElementById("heading").innerHTML += "<sup><small> dev</small></sup>";
         }
         else{
-            document.title += " v1.23.1";
-            document.getElementById("heading").innerHTML += "<sup><small> version 1.23.1</small></sup>";
+            document.title += " v1.23.2";
+            document.getElementById("heading").innerHTML += "<sup><small> version 1.23.2</small></sup>";
         }
         // Handle Activity Indicator, Set some variables top of page.
         let lastWorldScoped = "N/A";
@@ -531,8 +531,8 @@
         // Extract the current world and convert string to manual format
         function worldSplitter(input) { 
             let worldInt = NaN;
-            if(input.search(/cape|caoe/)>-1){
-                worldInt = parseInt( replaceOCRN(input.substring(input.search(/cape|caoe/)+4,input.search(/cape|caoe/)+10)), 10); 
+            if(input.search(/cape|caoe|cane/)>-1){
+                worldInt = parseInt( replaceOCRN(input.substring(input.search(/cape|caoe|cane/)+4,input.search(/cape|caoe|cane/)+10)), 10);
             }
             let processedInput = `${worldInt};${input}`;
             return processedInput;
@@ -572,6 +572,9 @@
                     // '/call' pasted
                     console.log("Detected /call pasted");
                     // Future update.
+                }
+                else if (input === ""){
+                    console.log("empty string");
                 }
                 else{
                     // New Format.
