@@ -4,678 +4,338 @@
 <!-- The MIT License applies to the entire page -->
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/components/relative-time/relative-time.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/components/alert/alert.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/components/progress-bar/progress-bar.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css"/>
+
     <style>
-        body {
-            /*Main Default Font*/
-            font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
-        }
-        .monospace {
-            /*Monospace Font, for toggle*/
-            font-family: Consolas, SF Mono, monospace;
-        }
-        .statusBox {
-            /*Main Status box*/
-            float: right;
-            width: 300px;
-        }
-        .statusBoxA {
-            /*Main Status box*/
-            float: right;
-            width: 300px;
-            border: 1px solid;
-            padding: 10px;
-            border-radius: 4px;
-        }
-        .inputTextboxBorder {
-            /*Used for indication colour boxes, e.g., Activity Indicator*/
-            border: 1px solid;
-            padding: 1px;
-            border-radius: 3px;
-        }
-        .defaultTextBoxes {
-            /*Default Styling for user input Textboxes*/
-            border: 1px solid;
-            border-radius: 3px;
-        }
-        .darkthemeTextBox {
-            /*DarkTheme Textboxes*/
-            background-color: #323339;
-            color: #dfe0e2; /* Font colour */
-            border: 1px solid;
-            border-radius: 3px;
-        }
-        .darktheme {
-            /*DarkTheme for toggle*/
-            background-color: #323339;
-            color: #dfe0e2; /* Font colour */
-        }
-        .no-wrap {/* Prevents wrapping for Chrome */
-            white-space: nowrap; /* Prevents wrapping */
-            overflow-wrap: normal; /* Prevents breaking at hyphens */
-            word-break: keep-all; /* Prevents breaking words */
-        }
-        .input_header {
-            position: sticky;
-            top: 0;
-            overflow: hidden;
-        }
-        .ih_default {
-            background-color: rgba(255, 255, 255, 1); /* Opaque white */
-        }
+        :not(:defined){visibility:hidden}body{font-family:Arial,Helvetica Neue,Helvetica,sans-serif}.monospace{font-family:Consolas,SF Mono,monospace}.sbPinFloat{width:274px;z-index:10;position:fixed;left:auto;right:8px;top:10px}.sbPinFloatUnlocked{width:274px;z-index:5;position:relative;left:auto;right:auto;top:auto}.sbPinFloatA{width:274px;z-index:10;position:fixed;left:auto;right:10px;top:1px}.sbPinFloatB{width:274px;z-index:10;position:relative;left:auto}.sbPinFloatC{width:274px;z-index:10;position:fixed;left:auto;right:10px;top:104px}.sbPinFloatD{width:274px;z-index:20;position:fixed;left:auto;right:10px;top:10px}.inputTextboxBorder{border:1px solid;padding:1px;border-radius:3px}.defaultTextBoxes{border:1px solid;border-radius:3px}.darkthemeTextBox{background-color:#323339;color:#dfe0e2;border:1px solid;border-radius:3px}.darktheme{background-color:#323339;color:#dfe0e2}.no-wrap{white-space:nowrap;overflow-wrap:normal;word-break:keep-all}.input_header{position:sticky;top:0;z-index:5}.ih_default{background-color:rgba(255,255,255,1)}.dataTable{max-width:calc(100% - 300px)}.slprogress{max-width:calc(100% - 300px);--indicator-color:MediumSeaGreen}@media (max-width:1056px){.dataTable{max-width:100%}.slprogress{max-width:100%;--indicator-color:MediumSeaGreen}}@media (max-width:1130px){.dataTable{font-size:14px}}@media (max-width:800px){.dataTable{font-size:10px}}@media (max-width:700px){.dataTable{font-size:9px}}@media (max-width:600px){.dataTable{font-size:8px}}@media (max-width:500px){.dataTable{font-size:7px}}@media (min-width:1056px){}fieldset{border-radius:4px}.boxShadow{box-shadow:0 2px}.divbreak{padding:3px}.divbreak2{padding:1px}
     </style>
     <title>Stargazer Tool</title>
 </head>
 <body>
-    <div id="input_header" class="input_header ih_default">
+<main>
     <h2 id="heading">Stargazer Tool</h2>
-    <script>
-        // Handle titles and headings
-        let development_flag = 0;
-        if(development_flag){
-            document.title += " dev";
-            document.getElementById("heading").innerHTML += "<sup><small> dev</small></sup>";
-        }
-        else{
-            document.title += " v1.23.2";
-            document.getElementById("heading").innerHTML += "<sup><small> version 1.23.2</small></sup>";
-        }
-        // Handle Activity Indicator, Set some variables top of page.
-        let lastWorldScoped = "N/A";
-        let activityIndChange = "N/A";
-        let activityIndColour = 0;
-    </script>
-    
-    <div class="statusBox">
-        <div class="statusBoxA">
-        <div style="float: right;">
-            <div style="padding-bottom: 4px;"><button id="toggleTheme">☀️/🌑</button></div>
-            <button id="toggleMonospace" >🔤/🔡</button>
-        </div>
-        <div id="utc_clock"></div>
-        <div id="status_lastworld"></div>
-        <div id="activityBlock" style="padding-bottom: 4px;"><a title="Visual indicator, you added a new scoping call. ">Activity:</a> <input type="text" class="inputTextboxBorder" id="statusCell" placeholder="  ☄️" size="4" disabled></div>
+    <div id="statusBoxMainDiv" class="statusBox sbPinFloat ih_default">
+        <div id="statusBoxA" class="statusBoxA">
+            <details open="potato">
+            <summary>Status:</summary>
+            <fieldset>
+                <div id="utc_clock"></div>
+                <div id="status_lastworld"></div>
+                <div id="outerActivityBlock"><div id="starfallAlarm"></div><div id="activityBlock"><a title="Visual indicator, you added a new scoping call. ">Activity:</a> <input type="text" class="inputTextboxBorder" id="statusCell" placeholder="  ☄️" size="4" disabled /></div></div>
+                <div id="waveTlimIndcator" title="Wave time limit, floor (min. of when a star will fall)">Wave t-limit: 🔕 UNSET</div>
+            </fieldset>
+            </details>
         </div>
         <div class="statusBoxNull" style="padding: 0px; font-size:1px;" >&nbsp;</div>
-
-        <div class="statusBoxB">
+        <div id="statusBoxB" class="statusBoxB">
+            <details open="potato">
+            <summary>Settings:</summary>
             <fieldset>
-                <legend>Settings:</legend>
                 <input type="checkbox" id="chbx1" name="chbx1" checked />
                 <label for="chbx1"> Lock input header</label><br />
                 <input type="checkbox" id="chbx2" name="chbx2" />
-                <label for="chbx2"> Generate on paste</label><br />
-                <input type="checkbox" id="chbx3" name="chbx3" checked />
-                <label for="chbx3"> Invert table entry</label><br />
+                <label for="chbx2"> Auto Generate & Copy</label><br />
+                <input type="checkbox" id="chbx3" name="chbx3" checked style="display: none" />
+                <label for="chbx3" style="display: none"> Invert table entry</label>
+                <button id="toggleTheme">☀️/🌑</button><label for="toggleTheme"> Toggle theme</label><br />
+                <button id="toggleMonospace" >🔤/🔡</button><label for="toggleMonospace"> Toggle monospace</label><br />
+                <input type="datetime-local" id="waveTimeLimit" class="defaultTextBoxes" />&nbsp;<button id="waveTimeLimitButton" title="Set wave t-lim">🌀</button><br />
+                <button id="plusWaveButton" title="Add next wave time limit">➕⌛</button> Add next wave t-limit
+                <div class="divbreak2"></div>
+                <details>
+                <summary>Alarms:</summary>
+                <fieldset>
+                    <input type="checkbox" id="chbx4" name="chbx4" checked />
+                    <label for="chbx4"> Enable audio alarms</label><br />
+                    <input id="alarmWorldTextbox" class="inputTextboxBorder" type="text" minlength="1" maxlength="3" size="3" title="Enter world number"/>&nbsp;<button id="alarmWorldButton">⏰</button><label for="alarmWorldTextbox">  Add world alarm</label><br />
+                    <div class="divbreak2"></div>
+                    <button id="alarmWorldCLButton">🆑</button> Clear world alarm(s)<br />
+                    <button id="tlimCLButton">🆑</button> Clear wave t-limit<br />
+                    <button id="resyncSLRButton" title="Force a resync of all Relative Time fields.">🔁</button> Resync rel-time fields
+                </fieldset>
+                </details>
             </fieldset>
+            </details>
+        </div>
+        <div id="statusBoxC" class="statusBoxC">
+            <details open="potato">
+            <summary class="ih_default">Options:</summary>
+            <fieldset>
+                <button id="buttonScrollToTop">🔝</button><button id="buttonScrollToTB">⬆️</button>
+                <label> Scroll to</label><br />
+                <button id="clearTableButton" title="Purge Table"> 🔥  </button><button id="clearTableButton2" style="display: none"> 🛑</button> Purge table<br />
+                <button id="buttonLineBreak">📃 </button>
+                <label for="buttonLineBreak"> Add blank line to table</label><br />
+                <button id="sortDupButton">⏸️</button>
+                <label for="sortDupButton"> Flag duplicate entries</label><br />
+                <div class="divbreak2"></div>
+                <select name="exportOptionsRegion" id="exportOptionsRegionSelect">
+                    <option value="default" selected>-- ⛺ Default --</option>
+                    <option value="Starstruck">☄️ Starstruck, (Feldip + C/K)</option>
+                    <option value="defaultf2p">🆓 F2P Default report</option>
+                    <option value="NULL" disabled>---</option>
+                    <option value="Anachronia">🦖 Anachronia</option>
+                    <option value="Asgarnia">✴️ Asgarnia</option>
+                    <option value="Ashdale">🐦 Ashdale</option>
+                    <option value="Crandor/Karamja">🌴 Crandor/Karamja</option>
+                    <option value="Daemonheim">ᚼᛒ Daemonheim</option>
+                    <option value="Feldip Hills">🟂 Feldip Hills</option>
+                    <option value="Fremennik/Lunar Isle">🌙 Fremennik/Lunar Isle</option>
+                    <option value="Kandarin">︽ Kandarin</option>
+                    <option value="Kharidian Desert">🏜️ Kharidian Desert</option>
+                    <option value="Lost Grove">🌲🏞️ Lost Grove</option>
+                    <option value="Menaphos">🌵🌆 Menaphos</option>
+                    <option value="Misthalin">♾️ Misthalin</option>
+                    <option value="Morytania/Mos Le'Harmless">🦇🏴‍☠️ Morytania/Mos Le'Harmless</option>
+                    <option value="Piscatoris/Gnome/Tirannwn">🦌 Piscatoris/Gnome/Tirannwn</option>
+                    <option value="Tuska">🐗 Tuska</option>
+                    <option value="Wilderness">🏕️☠️ Wilderness</option>
+                    <option value="NULL2" disabled>---</option>
+                    <option value="🇩📊">📊⏸️ Flag duplicates 🟧</option>
+                    <option value="🇼📊">📊↕️ Sort by, World</option>
+                    <option value="🇹📊">📊↕️ Sort by, Landing time</option>
+                    <option value="🇸📊">📊↕️ Sort by, Size</option>
+                    <option value="7️⃣">7️⃣ Export table size >7 + Feldip</option>
+                    <option value="⛔">⛔ Errors</option>
+                </select><br />
+                <div style="padding-bottom: 4px;"></div>
+                <select name="exportOptionsSize" id="exportOptionsSizeSelect">
+                    <option value="default" selected>---</option>
+                    <option value="s1 ">1️⃣ Size 1</option>
+                    <option value="s2 ">2️⃣ Size 2</option>
+                    <option value="s3 ">3️⃣ Size 3</option>
+                    <option value="s4 ">4️⃣ Size 4</option>
+                    <option value="s5 ">5️⃣ Size 5</option>
+                    <option value="s6 ">6️⃣ Size 6</option>
+                    <option value="s7 ">7️⃣ Size 7</option>
+                    <option value="s8 ">8️⃣ Size 8</option>
+                    <option value="s9 ">9️⃣ Size 9</option>
+                    <option value="s10 ">🔟🌠 Size 10</option>
+                </select>
+                <button id="buttonTableQuery" >📟 Query table</button>
+            </fieldset>
+            </details>
+        </div>
+        <div id="id_alerts" class="alert-toast sbPinFloatD">
+            <sl-alert id="queryAlertSuccess" variant="primary" duration="3000" countdown="rtl" closable>
+                Query Report, generated and added to clipboard. 📋✅
+            </sl-alert>
+            <sl-alert id="waveTimeAlertSuccess" variant="success" duration="3000" countdown="rtl" closable>
+                Wave Time Limit SET. 🔒⏰
+            </sl-alert>
+            <sl-alert id="timeAddAlertSuccess" variant="success" duration="3000" countdown="rtl" closable>
+                Added 2h 8m to <br />Wave t-Limit. ➕⌛
+            </sl-alert>
+            <sl-alert id="SGTEButtonSuccess" variant="success" duration="3000" countdown="rtl" closable>
+                Table successfully exported! 🚚📋
+            </sl-alert>
+            <sl-alert id="SGTELineButtonSuccess" variant="success" duration="3000" countdown="rtl" closable>
+                Line exported! 📋📑
+            </sl-alert>
+            <sl-alert id="querySortAlertSuccess" variant="success" duration="1000" countdown="rtl" closable>
+                Sort complete! 📊↕️
+            </sl-alert>
+            <sl-alert id="generalAlertSuccess" variant="success" duration="2000" countdown="rtl" closable>
+                ✅ Placeholder Success!, Check console.
+            </sl-alert>
+            <sl-alert id="generalAlertWarning" variant="warning" duration="2000" countdown="rtl" closable>
+                ⚠️ Placeholder Warning!, Check console.
+            </sl-alert>
+            <sl-alert id="generalAlertError" variant="danger" duration="2000" countdown="rtl" closable>
+                🛑 Placeholder Error!, Check console.
+            </sl-alert>
         </div>
     </div>
 
-    <!-- Textbox for user input -->
-    <!-- This may be phased out in the future -->
-    <div id="inputContainer">
-        <label for="csvInput">Enter text in DSV format using a semicolon ; as follows: <sup>World<sub>;</sub>Transcript</sup></label>
+    <div id="input_header" class="input_header ih_default boxShadow">
+        <div class="divbreak"></div>
+        <div id="inputContainer2">
+            <div style="padding: 4px;">
+                <label title="'Full Transcript' Telescope message along with top World number interface.">Add Row:</label>
+                <button id="addRowFullParse">Add Row, (Universal Prompt)</button><br />
+            </div>
+            &nbsp;<textarea id="expInput" class="defaultTextBoxes" onpaste="onPasteExp();" onclick="this.select();" placeholder="PASTE AREA, Paste here!&#13;&#10;&#13;&#10;You see a shooting star! ... ... looks to be size 10. Friends List RuneScape 39" rows="15" cols="50"></textarea>&nbsp;&nbsp;&nbsp;
+        </div>
         <br />
-        <label for="csvInput">(e.g., 39<sub>;</sub>You see a shooting star! ..... to be of average size.):</label>
-        <!-- Was CSV but one of the transcripts(Piscatoris) has a comma so hence DSV with semicolon -->
-        <input type="text" id="csvInput" class="defaultTextBoxes" placeholder="Enter DSV values here">
-        <button id="addRowBtn">Add Row</button>
-        <button id="addRowBtnPrpt">Add Row (Prompt)</button>
-    </div>
-    <br />
-    <div id="inputContainer2">
-        <label title="'Full Transcript' Telescope message along with top World number interface.">Add Row, Full Transcript (FT):</label>
-        <button id="addRowFullParse">Add Row, FT (Prompt)</button><br />
-        <textarea id="expInput" class="defaultTextBoxes" onpaste="onPasteExp();" onclick="this.select();" placeholder="PASTE AREA, Paste here!&#13;&#10;&#13;&#10;You see a shooting star! ... ... looks to be size 10. Friends List RuneScape 39" rows="7" cols="50"></textarea>
-    </div>
-    <br />
+        <div class="divbreak"></div>
+        <sl-progress-bar id="potatobar" class="slprogress" value="0" style="--height: 6px;"></sl-progress-bar>
+        <div class="divbreak"></div>
     </div>
 
-    <table id="datatable" border="1">
-        <thead>
-            <tr>
-                <th>&nbsp;World&nbsp;</th>
-                <th>&nbsp;Telescope Text Extraction&nbsp;</th>
-                <th>&nbsp;Timestamp&nbsp;</th>
-                <th>&nbsp;<a title="Export Status">ES</a>&nbsp;</th>
-                <th>&nbsp;Actions&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Table rows will be added here -->
-        </tbody>
-    </table>
-    <br />
-    ES Colour Key:&nbsp;&nbsp;[
-    <a title=" ">Field OK:</a> <input type="text" class="inputTextboxBorder" style="background-color: LightSkyBlue;" placeholder="    " size="4" disabled> |
-    <a title=" ">Generate OK:</a> <input type="text" class="inputTextboxBorder" style="background-color: PaleGreen;" placeholder="    " size="4" disabled> |
-    <a title="Check Error Field; World, Location and or Star-Size; Export generated with Errors.">ERROR:</a> <input type="text" class="inputTextboxBorder" style="background-color: LightCoral;" placeholder="    " size="4" disabled> |
-    <a title="Indication row exported with relative time ≤ 1">Time ≤ 1:</a> <input type="text" class="inputTextboxBorder" style="background-color: #FED8B1;" placeholder="    " size="4" disabled> ]<br />
-    ES Error Key:&nbsp;&nbsp;[W:World]&emsp;[L:Location]&emsp;[S:Size]&emsp;[T+NaN:Time]&emsp;[OT:Time > 2hr?] <br />
-    <br />
-    == README ==
-    <small>
-    <br />
-    This tool is intended to be used with the aid of 'Text Grab', with 'Capture Last Region Selection' option.<br />
-    Text Grab is what Microsoft PowerToys, Text Extractor is based on.<br />
-    <br />
-    However, this tool can essentially be used with any OCR text extraction software. e.g., macOS TRex OCR / Text Sniper.<br />
-    <br />
-    Usage:<br />
-    Prepare your game window to have the top of your friends list, to be adjacent or below the telescope message.<br />
-    Run the OCR on the section of the screen like in this image. <br />
-    &emsp;&emsp;<img src="img_example_008D186F.png" alt="alt text: Image of the Top of Friends list positioned (Bottom Left) next to the Game Dialog (Telescope message)."><br />
-    Paste the OCR Text extraction into the PASTE AREA!<br />
-    Do not delay entering the data, as the message input time is used to, calculate when the star will land.<br />
-    When you are ready to export, click on the "Generate & Copy" button, this will generate the "/call" command and add it to your clipboard.<br />
-    (There is no hurry to export, as the tool will automatically adjust the time accordingly, with a floor of 1 minute.)<br />
-    <br />
-    When using Text Grab <a href="https://github.com/TheJoeFin/Text-Grab">https://github.com/TheJoeFin/Text-Grab</a>, it is recommended to:
-    <pre>
-    - Default Launch Window: Full Screen
-    - Fullscreen Grab (⊞ Win+Shift+F) or Copy Last Region Selection (⊞ Win+Ctrl+Shift+F)
-    - Turn OFF, "Correct common confusions between numbers and letters" & 
-    In order:
-        1. With history ON, capture the area where the world number and telescope message is, to SET the "Last Region Selection"
-        2. Turn OFF, "Keep recent history of Grabs and Edit Text Windows", (This will lock the Last Region and also save disk space.)
-    </pre>
-    Other:<br />
-    <a href="https://learn.microsoft.com/en-us/windows/powertoys/text-extractor">https://learn.microsoft.com/en-us/windows/powertoys/text-extractor</a> With the activation shortcut (default: ⊞ Win+Shift+T)<br />
-    <br />
-    Microsoft PowerToys: <a href="https://learn.microsoft.com/en-us/windows/powertoys/">https://learn.microsoft.com/en-us/windows/powertoys/</a><br />
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/microsoft/PowerToys">https://github.com/microsoft/PowerToys</a><br />
-    <br />
-    </small>
+    <div id="tableDownward" class="tableDownward">
+        <div id="divTableTop"></div>
+        <div class="divbreak"></div>
+        <table id="datatable" border="1" class="dataTable">
+            <thead>
+                <tr>
+                    <th>&nbsp;<a title="Click to purge row">rm</a>&nbsp;</th>
+                    <th>&nbsp;World <button id="sortWorldButton" title="Sort">⤴️</button>&nbsp;</th>
+                    <th>&nbsp;Region&nbsp;</th><!-- new location -->
+                    <th>&nbsp;Size <button id="sortSizeButton" title="Sort">⤴️</button>&nbsp;</th><!-- new size s1 -->
+                    <th>&nbsp;Landing <button id="sortTimeButton" title="Sort">⤴️</button>&nbsp;</th><!-- Timestamp changed to landing, with details -->
+                    <th class="no-wrap">&nbsp;<a title="Process Status/Text EXtraction">PS/TEX</a>&nbsp;</th><!-- new Process Status, could put TEX in details here --><!-- Telescope Text Extraction -->
+                    <th>&nbsp;<a title="Export Status">ES</a>&nbsp;</th>
+                    <th>&nbsp;Actions&emsp;<button id="exportTableButton" title="Export full table">🚚</button><button id="exportTable7plusButton" title="Export table s7+">7️⃣</button>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be added here -->
+            </tbody>
+        </table>
+        <div id="divTableBottom"></div>
+        <br />
+        ES Colour Key:&nbsp;&nbsp;[
+        <a title=" ">Field OK:</a> <input type="text" class="inputTextboxBorder" style="background-color: LightSkyBlue;" placeholder="    " size="4" disabled /> |
+        <a title=" ">Generate OK:</a> <input type="text" class="inputTextboxBorder" style="background-color: PaleGreen;" placeholder="    " size="4" disabled /> |
+        <a title="Check Error Field; World, Region and or Star-Size; Export generated with Errors.">ERROR:</a> <input type="text" class="inputTextboxBorder" style="background-color: LightCoral;" placeholder="    " size="4" disabled /> |
+        <a title="Indication row exported with relative time ≤ 1">Time ≤ 1:</a> <input type="text" class="inputTextboxBorder" style="background-color: #FED8B1;" placeholder="    " size="4" disabled /> ]<br />
+        PS/ES Error Key:&nbsp;&nbsp;[W:World]&emsp;[R:Region]&emsp;[S:Size]&emsp;[T+NaN:Time] <br />
+        <br />
+        == README ==
+        <small>
+        <br />
+        This tool is intended to be used with the aid of 'Text Grab', with 'Capture Last Region Selection' option.<br />
+        Text Grab is what Microsoft PowerToys, Text Extractor is based on.<br />
+        <br />
+        However, this tool can essentially be used with any OCR text extraction software. e.g., macOS TRex OCR / Text Sniper.<br />
+        <br />
+        Usage:<br />
+        Prepare your game window to have the top of your friends list, to be adjacent or below the telescope message.<br />
+        Run the OCR on the section of the screen like in this image. <br />
+        &emsp;&emsp;<img src="img_example_008D186F.png" alt="alt text: Image of the Top of Friends list positioned (Bottom Left) next to the Game Dialog (Telescope message)."><br />
+        Paste the OCR Text extraction into the PASTE AREA!<br />
+        Do not delay entering the data, as the message input time is used to, calculate when the star will land.<br />
+        When you are ready to export, click on the "Generate & Copy" button, this will generate the "/call" command and add it to your clipboard.<br />
+        (There is no hurry to export, as the tool will automatically adjust the time accordingly, with a floor of 1 minute.)<br />
+        <br />
+        When using Text Grab <a href="https://github.com/TheJoeFin/Text-Grab">https://github.com/TheJoeFin/Text-Grab</a>, it is recommended to:
+        <pre>
+        - Default Launch Window: Full Screen
+        - Fullscreen Grab (⊞ Win+Shift+F) or Copy Last Region Selection (⊞ Win+Ctrl+Shift+F)
+        - Turn OFF, "Correct common confusions between numbers and letters" &
+        In order:
+            1. With history ON, capture the area where the world number and telescope message is, to SET the "Last Region Selection"
+            2. Turn OFF, "Keep recent history of Grabs and Edit Text Windows", (This will lock the Last Region and also save disk space.)
+        </pre>
+        Other:<br />
+        <a href="https://learn.microsoft.com/en-us/windows/powertoys/text-extractor">https://learn.microsoft.com/en-us/windows/powertoys/text-extractor</a> With the activation shortcut (default: ⊞ Win+Shift+T)<br />
+        <br />
+        Microsoft PowerToys: <a href="https://learn.microsoft.com/en-us/windows/powertoys/">https://learn.microsoft.com/en-us/windows/powertoys/</a><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/microsoft/PowerToys">https://github.com/microsoft/PowerToys</a><br />
+        <br />
+        </small>
+    </div>
+</main>
+<script>
+    const G_versionNumber="1.50",G_development_flag=!1;let lastWorldScoped="N/A",activityIndChange="N/A",activityIndColour=0,G_waveTimeLimit=0,G_progress_bar=0,UTCDebug=!1,UTCDebugNextMinute=0,G_alarm_time=0,G_alarm2_time=0,G_alarm3_time=0;G_development_flag===!0?(document.title+=" dev",document.getElementById("heading").innerHTML+="<sup><small> dev</small></sup>"):(document.title+=` v${G_versionNumber}`,document.getElementById("heading").innerHTML+=`<sup><small> version ${G_versionNumber}</small></sup>`);
+    function F_UTCDebug(a){a===!0?(UTCDebug=!0,UTCDebugNextMinute=Math.floor(Date.now()/1E3/60)*60+60):(UTCDebug=!1,UTCDebugNextMinute=0);return`UTCDebug ${UTCDebug}`}
+    function handleInput(a){if(a)if(a=a.split(";"),a.length===2){var b=document.getElementById("datatable").getElementsByTagName("tbody")[0];b=funcChb3()?b.insertRow(0):b.insertRow();var c=b.insertCell(0),f=document.createElement("button");f.textContent="\u23cf\ufe0f";f.addEventListener("click",function(){this.closest("tr").remove()});c.appendChild(f);c=processInput(a[0].trim(),a[1].trim());const l=b.insertCell(1);l.textContent="\u00a0w"+a[0].trim()+"\u00a0";lastWorldScoped=a[0].trim();l.textContent===
+    "\u00a0wNaN\u00a0"&&(l.textContent="\u00a0\u26a0\ufe0f#WLD!\u00a0");const g=b.insertCell(2);g.classList.add("no-wrap");g.textContent="\u00a0"+c[0][0]+"\u00a0";const h=b.insertCell(3);c[1]==="\u26a0\ufe0f#SIZE!"?h.textContent="\u00a0"+c[1]+"\u00a0":String(c[1]).search(/Small|Average|Big|Very Small|Fairly Small|Fairly Big|Very Big/)>-1?h.textContent="\u00a0s "+c[1]+"\u00a0":(h.textContent="\u00a0s"+c[1]+"\u00a0",h.textContent==="\u00a0sNaN\u00a0"&&(h.textContent="\u00a0\u26a0\ufe0f#SIZE!\u00a0"));const t=
+        b.insertCell(4);f=(new Date(c[2][0])).toUTCString().substring(17,22);var d=additionalWorldData(lastWorldScoped);d=d===void 0?"":` ${d}`;t.appendChild(createDetailsElement("\u26a0\ufe0f#TIME!\u00a0","Size:`"+c[1]+"` World:`"+a[0].trim()+"` in **"+c[0][0]+"**, <t:"+c[2][1]+":R> (`"+f+"`)"+d));isNaN(c[2][0])||(f=(new Date(c[2][0])).toISOString(),t.firstElementChild.firstElementChild.innerHTML="<small>("+f.substring(11,16)+")<sl-relative-time date="+f+' format="short" sync></sl-relative-time>\u00a0</small>');
+        f=b.insertCell(5);d="";d=c[3]==="\u2611\ufe0f"?"\u2611\ufe0f":"\u26d4"+c[3];f.appendChild(createDetailsElement(d,a[1].trim()));d.includes("\u26d4")&&f.children[0].children[0].classList.add("no-wrap");const u=b.insertCell(6),k=b.insertCell(7);k.style.display="none";k.textContent=c[4];const e=b.insertCell(8);e.style.display="none";e.textContent=c[2][0];const r=b.insertCell(9);r.classList.add("no-wrap");a=document.createElement("button");a.textContent="\ud83d\udcd1";a.addEventListener("click",function(){k.textContent.indexOf("\u00ab\u300b")===
+        -1&&(k.textContent+="\u300b");copyToClipboard(k.textContent);document.getElementById("SGTELineButtonSuccess").show()});r.appendChild(a);a=document.createElement("button");a.textContent="Generate & Copy";a.addEventListener("click",function(){generateDiscord(l,g,h,t,u,r,k,e)});r.appendChild(a);activityUpdate();funcChb2()&&generateDiscord(l,g,h,t,u,r,k,e)}else document.getElementById("generalAlertError").innerText="\u2049\ufe0f Invalid Input, \nFormat not recognised.",document.getElementById("generalAlertError").show()}
+    function SGTExportHandle(a){if(a){if(a.indexOf("\u300b")>-1){var b=a.split("\u300b");b.pop();for(var c=0;c<b.length;c++){var f=b[c].split("\u00ab");f[2]=regionParser(f[2])[0];f[4]=SGTE_TimeParser(f[4],"from36");h(b[c],f)}}else if(a.indexOf("/call")>-1){b=a.split(":");c=b[1].split("region");c=c[0].trim();var d=b[2].split("size");d=d[0].trim();f=b[3].split("relative-time");f=f[0].trim();var l=b[4].trim();l=Math.floor(Date.now()/1E3/60)*60*1E3+Number(l)*60*1E3;l<G_waveTimeLimit&&(l=G_waveTimeLimit);
+        d=regionParser(d);l=SGTE_TimeParser(l,"to36");var g="";isNaN(Number(c))&&(g+="W",c="NaN");isNaN(Number(f))&&(g+="S",f.indexOf("Approximate")>-1||(f="NaN"));g===""&&(g="\u2611\ufe0f");h("\u300a\u00ab"+c+"\u00ab"+d[1]+"\u00ab"+f+"\u00ab"+l[2]+"\u00ab"+(g==="\u2611\ufe0f"?"":g)+"\u00ab\u300b",[b[0],c,d[0],f,l,g,"\u300b"])}else if(a.indexOf("World    Region           Size Time")===0)for(b=" ".concat(String(a)).match(/.{1,36}/g),b=b.reverse(),b.pop(),b.pop(),funcChb3()||(b=b.reverse()),c=0;c<b.length;c++)f=
+        b[c].substring(0,3).trim(),d=b[c].substring(9,26).trim(),l=b[c].substring(26,31).trim(),g=b[c].substring(31,36).trim(),d!==""&&(d==="Pisc/Gnome/Tir"&&(d="\ud83c\uddea"),d==="Removed No Star"&&(d="\ud83c\uddeb"),d=regionParser(d),l.includes("s")?l=l.substring(1):(l==="1-3"&&(l="Small"),l==="4-6"&&(l="Average"),l==="7-10"&&(l="Big"),l==="1-2"&&(l="Very Small"),l==="3-4"&&(l="Fairly Small"),l==="5-7"&&(l="Fairly Big"),l==="8-10"&&(l="Very Big")),g=(new Date).toISOString().substring(0,11)+g+":00.000Z",
+        g=(new Date(g)).getTime(),g=SGTE_TimeParser(g,"to36"),h("\u300a\u00ab"+f+"\u00ab"+d[1]+"\u00ab"+l+"\u00ab"+g[2]+"\u00ab\u00ab\u300b",["Table",f,d[0],l,g,"\u2611\ufe0f","\u300b"]));function h(t,u){var k=document.getElementById("datatable").getElementsByTagName("tbody")[0];k=funcChb3()?k.insertRow(0):k.insertRow();var e=k.insertCell(0),r=document.createElement("button");r.textContent="\u23cf\ufe0f";r.addEventListener("click",function(){this.closest("tr").remove()});e.appendChild(r);const x=k.insertCell(1);
+        x.textContent="\u00a0w"+u[1]+"\u00a0";lastWorldScoped=u[1];x.textContent==="\u00a0wNaN\u00a0"&&(x.textContent="\u00a0\u26a0\ufe0f#WLD!\u00a0");const z=k.insertCell(2);z.classList.add("no-wrap");z.textContent="\u00a0"+u[2]+"\u00a0";const v=k.insertCell(3);u[3]==="\u26a0\ufe0f#SIZE!"?v.textContent="\u00a0"+u[3]+"\u00a0":String(u[3]).search(/Small|Average|Big|Very Small|Fairly Small|Fairly Big|Very Big/)>-1?v.textContent="\u00a0s "+u[3]+"\u00a0":(v.textContent="\u00a0s"+u[3]+"\u00a0",v.textContent===
+        "\u00a0sNaN\u00a0"&&(v.textContent="\u00a0\u26a0\ufe0f#SIZE!\u00a0"));v.textContent==="\u00a0sApproximate\u00a0"&&(v.textContent="\u00a0\u26a0\ufe0f#A-SIZE!\u00a0");const q=k.insertCell(4);e=Number(u[4][0]);r=(new Date(e)).toUTCString().substring(17,22);let n=additionalWorldData(lastWorldScoped);q.appendChild(createDetailsElement("\u26a0\ufe0f#TIME!\u00a0","Size:`"+u[3]+"` World:`"+u[1]+"` in **"+u[2]+"**, <t:"+e/1E3+":R> (`"+r+"`)"+(n===void 0?"":` ${n}`)));isNaN(e)||(e=(new Date(e)).toISOString(),
+            q.firstElementChild.firstElementChild.innerHTML="<small>("+e.substring(11,16)+")<sl-relative-time date="+e+' format="short" sync></sl-relative-time>\u00a0</small>');e=k.insertCell(5);r="";r=u[5]==="\u2611\ufe0f"||u[5]===""?"\u2611\ufe0f":"\u26d4"+u[5];u[0]==="/call world"?e.appendChild(createDetailsElement(r,a)):e.appendChild(createDetailsElement(r,t));r.includes("\u26d4")&&e.children[0].children[0].classList.add("no-wrap");const m=k.insertCell(6),p=k.insertCell(7);p.style.display="none";p.textContent=
+            t;const w=k.insertCell(8);w.style.display="none";w.textContent=u[4][0];const y=k.insertCell(9);y.classList.add("no-wrap");t=document.createElement("button");t.textContent="\ud83d\udcd1";t.addEventListener("click",function(){p.textContent.indexOf("\u00ab\u300b")===-1&&(p.textContent+="\u300b");copyToClipboard(p.textContent);document.getElementById("SGTELineButtonSuccess").show()});y.appendChild(t);t=document.createElement("button");t.textContent="Generate & Copy";t.addEventListener("click",function(){generateDiscord(x,
+            z,v,q,m,y,p,w)});y.appendChild(t);activityUpdate();funcChb2()&&generateDiscord(x,z,v,q,m,y,p,w)}}else document.getElementById("generalAlertError").innerText="\u2049\ufe0f Invalid Input, \nFormat not recognised.",document.getElementById("generalAlertError").show()}
+    function processInput(a,b){const c=regionParser(b);var f=b.indexOf("next")>-1?b.indexOf("next")+4:-1,d=b.indexOf("next")>-1?b.indexOf("to "):-1,l=b.substring(f,d).indexOf("hour");const g=b.substring(f,d).indexOf("hours"),h=b.substring(f,d).indexOf("minute");g>-1?(d=parseInt(replaceOCRN(b.substring(f,d).substring(g+5,h)),10),d+=120):g===-1&&l>-1?(d=parseInt(replaceOCRN(b.substring(f,d).substring(l+4,h)),10),d+=60):d=h===-1?parseInt(replaceOCRN(b.substring(f,d)),10):parseInt(replaceOCRN(b.substring(f,
+        d).substring(0,h)),10);l=b.indexOf("be")+2;f="\u26a0\ufe0f#SIZE!";b.substring(l).indexOf("size")===1?f=parseInt(replaceOCRN(b.substring(l+5)),10):(b.substring(l).indexOf("small")>-1&&(f="Small"),b.substring(l).indexOf("average")>-1&&(f="Average"),b.substring(l).indexOf("big")>-1&&(f="Big"),b.substring(l).indexOf("very small")>-1&&(f="Very Small"),b.substring(l).indexOf("fairly small")>-1&&(f="Fairly Small"),b.substring(l).indexOf("fairly big")>-1&&(f="Fairly Big"),b.substring(l).indexOf("very big")>
+    -1&&(f="Very Big"));b=Math.floor(Date.now()/1E3/60)*60*1E3+d*60*1E3;b<G_waveTimeLimit&&(b=G_waveTimeLimit);b=SGTE_TimeParser(b,"to36");d="";l=0;isNaN(a)||a>=260?d+="W":l+=1;isNaN(f)||c[0]==="\u26a0\ufe0f#REG!"||f==="\u26a0\ufe0f#SIZE!"?(c[0]==="\u26a0\ufe0f#REG!"&&(d+="R"),f!=="Small"&&f!=="Average"&&f!=="Big"&&f!=="Very Small"&&f!=="Fairly Small"&&f!=="Fairly Big"&&f!=="Very Big"?d+="S":l+=1):l+=1;l===2&&(d+="\u2611\ufe0f");return[c,f,b,d,`\u300a\u00ab${a}\u00ab${c[1]}\u00ab${f}\u00ab${b[2]}\u00ab${d===
+    "\u2611\ufe0f"?"":d}\u00ab\u300b`]}
+    function generateDiscord(a,b,c,f,d,l,g,h){var t=g.textContent.split("\u00ab");f=t[1];g=b.textContent.trim();let u=t[3];isNaN(Number(t[3]))&&(u="Approximate");if(t[3]==="\u26a0\ufe0f#SIZE!"||t[3]==="NaN")u="\u26a0\ufe0f#SIZE!";var k=Math.floor(Date.now()/1E3/60)*60*1E3;k=h=(Number(h.textContent===""?NaN:h.textContent)-k)/60/1E3;h<1&&(h=1);isNaN(h)&&(h=1);t=`/call world: ${t[1]} region: ${g} size: ${u} relative-time: ${h}`;let e=0;d.classList.add("no-wrap");d.textContent="\u00a0";isNaN(f)||f>=260?(colourCell(a,
+        "danger"),colourCell(d,"danger"),colourCell(l,"danger"),d.textContent+="W",t=""):(colourCell(a,"info"),e+=1);isNaN(u)||g==="\u26a0\ufe0f#REG!"||u==="\u26a0\ufe0f#SIZE!"?(g==="\u26a0\ufe0f#REG!"?(colourCell(b,"danger"),d.textContent+="R",t=""):colourCell(b,"info"),u!=="Approximate"?(colourCell(c,"danger"),colourCell(d,"danger"),colourCell(l,"danger"),d.textContent+="S",t=""):(colourCell(c,"info"),e+=1,c.textContent==="\u00a0\u26a0\ufe0f#A-SIZE!\u00a0"&&(colourCell(c,"warning"),--e,d.textContent+="S",
+        colourCell(d,"warning"),colourCell(l,"warning")))):(colourCell(b,"info"),colourCell(c,"info"),e+=1);e===2&&(colourCell(a,"info"),colourCell(b,"info"),colourCell(d,"success"),colourCell(l,"success"));k*=-1;k=(k<0?"":"+")+k;h===1&&e===2?(d.textContent+=`[T${k}]\u00a0`,colourCell(d,"warning"),colourCell(b,"warning")):d.textContent+=`[T${k}]\u00a0`;copyToClipboard(t)}
+    function replaceOCRN(a){return a.replace(/\s+/g,"").replace(/I/g,"1").replace(/O/gi,"0").replace(/S/gi,"5").replace(/Z/gi,"2").replace(/B/g,"8").replace(/g/g,"9").replace(/l/g,"1")}
+    function colourCell(a,b){b==="danger"?(a.style.backgroundColor="LightCoral",a.style.color="Black"):b==="info"?(a.style.backgroundColor="LightSkyBlue",a.style.color="Black"):b==="success"?(a.style.backgroundColor="PaleGreen",a.style.color="Black"):b==="warning"?(a.style.backgroundColor="#FED8B1",a.style.color="Black"):b==="alert"?(a.style.backgroundColor="#FF4F00",a.style.color="Black"):b==="alarm"?(a.style.backgroundColor="MediumSpringGreen",a.style.color="Black"):b==="clear"&&a.removeAttribute("style")}
+    function worldSplitter(a){let b=NaN;a.search(/cape|caoe|cane/)>-1&&(b=parseInt(replaceOCRN(a.substring(a.search(/cape|caoe|cane/)+4,a.search(/cape|caoe|cane/)+10)),10));return`${b};${a}`}function createDetailsElement(a,b){const c=document.createElement("details"),f=document.createElement("summary"),d=document.createElement("p");f.textContent=a;d.textContent=b;c.appendChild(f);c.appendChild(d);return c}
+    function copyToClipboard(a){navigator.clipboard.writeText(a).then(()=>{console.info("Copied to clipboard: ",a)}).catch(b=>{console.error("Error copying to clipboard: ",b)})}
+    function regionParser(a){a=String(a);let b=[""];a.indexOf("Anachronia")>-1||a.indexOf("onia")>-1||a.indexOf("1\ufe0f\u20e3")>-1?(b[0]="Anachronia",b[1]="1\ufe0f\u20e3"):a.indexOf("Asgarnia")>-1||a.indexOf("rnia")>-1||a.indexOf("2\ufe0f\u20e3")>-1?(b[0]="Asgarnia",b[1]="2\ufe0f\u20e3"):a.indexOf("Ashdale")>-1||a.indexOf("dale")>-1||a.indexOf("3\ufe0f\u20e3")>-1?(b[0]="Ashdale",b[1]="3\ufe0f\u20e3"):a.indexOf("Crandor")>-1||a.indexOf("amja")>-1||a.indexOf("4\ufe0f\u20e3")>-1?(b[0]="Crandor/Karamja",
+        b[1]="4\ufe0f\u20e3"):a.indexOf("Daemonheim")>-1||a.indexOf("sula")>-1||a.indexOf("5\ufe0f\u20e3")>-1?(b[0]="Daemonheim",b[1]="5\ufe0f\u20e3"):a.indexOf("Feldip")>-1||a.indexOf("ills")>-1||a.indexOf("6\ufe0f\u20e3")>-1?(b[0]="Feldip Hills",b[1]="6\ufe0f\u20e3"):a.indexOf("Fremennik")>-1||a.indexOf("unar")>-1||a.indexOf("7\ufe0f\u20e3")>-1?(b[0]="Fremennik/Lunar Isle",b[1]="7\ufe0f\u20e3"):a.indexOf("Kandarin")>-1||a.indexOf("arin")>-1||a.indexOf("8\ufe0f\u20e3")>-1?(b[0]="Kandarin",b[1]="8\ufe0f\u20e3"):
+        a.indexOf("Desert")>-1||a.indexOf("dian")>-1||a.indexOf("9\ufe0f\u20e3")>-1?(b[0]="Kharidian Desert",b[1]="9\ufe0f\u20e3"):a.indexOf("Grove")>-1||a.indexOf("ost")>-1||a.indexOf("\ud83c\udde6")>-1?(b[0]="Lost Grove",b[1]="\ud83c\udde6"):a.indexOf("Menaphos")>-1||a.indexOf("phos")>-1||a.indexOf("\ud83c\udde7")>-1?(b[0]="Menaphos",b[1]="\ud83c\udde7"):a.indexOf("Misthalin")>-1||a.indexOf("alin")>-1||a.indexOf("\ud83c\udde8")>-1?(b[0]="Misthalin",b[1]="\ud83c\udde8"):a.indexOf("Morytania")>-1||a.indexOf("armless")>
+        -1||a.indexOf("\ud83c\udde9")>-1?(b[0]="Morytania/Mos Le'Harmless",b[1]="\ud83c\udde9"):a.indexOf("Piscatoris")>-1||a.indexOf("nnwn")>-1||a.indexOf("\ud83c\uddea")>-1?(b[0]="Piscatoris/Gnome/Tirannwn",b[1]="\ud83c\uddea"):a.indexOf("Tuska")>-1||a.indexOf("uska")>-1||a.indexOf("\ud83c\uddeb")>-1?(b[0]="Tuska",b[1]="\ud83c\uddeb"):a.indexOf("Wilderness")>-1||a.indexOf("derness")>-1||a.indexOf("\ud83d\udd1f")>-1?(b[0]="Wilderness",b[1]="\ud83d\udd1f"):(b[0]="\u26a0\ufe0f#REG!",b[1]="\u26a0\ufe0f");return b}
+    function SGTE_TimeParser(a,b){let c=[];b==="from36"?(c[2]=a,c[1]=parseInt(c[2],36),c[0]=Number(c[1])*1E3,a==="NaN"&&(c=[])):b==="to36"&&(c[0]=a,c[1]=Number(a)/1E3,c[2]=c[1].toString(36));return c}
+    function additionalWorldData(a){const b=Number(a);return(a=[[18,"[leg]"],[30,"[2000]"],[47,"[pt]"],[48,"[2600]"],[52,"[vip]"],[75,"[pt]"],[86,"[1500]"],[101,"[pt]"],[102,"[de]"],[114,"[1500]"],[115,"[leg]"],[118,"[fr]"],[121,"[de]"],[137,"[leg]"],[33,"[leg]"],[55,"[fr]"],[57,"[leg]"],[94,"[pt]"],[120,"[leg]"],[122,"[de]"],[136,"[leg]"],[251,"[pt]"]].find(c=>c[0]===parseInt(b)))?String(a[1]):void 0}
+    document.getElementById("addRowFullParse").addEventListener("click",function(){let a=prompt("Universal Input, Accepts the following: \nDSV(World;Transcript), /call, SGTExport and, standard 'Full Transcript'\n  Enter input:");a.substring(0,a.indexOf(";"))>0&&a.indexOf("/call")===-1?handleInput(a):a.indexOf("/call")>-1?SGTExportHandle(a):a.indexOf("\u300a\u00ab")>-1?SGTExportHandle(a):a.indexOf("World    Region           Size Time")===0?(console.log("Detected Table"),SGTExportHandle(a)):a===""?console.log("empty string"):
+        (a=a.indexOf(";")>-1?a.replace(";"," "):a,a=a.indexOf("...")>-1?a.replace("...","...#be size#"):a,handleInput(worldSplitter(a)));document.getElementById("expInput").focus();updateProgressBar()});
+    function onPasteExp(){setTimeout(function(){let a=document.getElementById("expInput").value;a.substring(0,a.indexOf(";"))>0&&a.indexOf("/call")===-1?handleInput(a):a.indexOf("/call")>-1?SGTExportHandle(a):a.indexOf("\u300a\u00ab")>-1?SGTExportHandle(a):a.indexOf("World    Region           Size Time")===0?SGTExportHandle(a):a===""?console.log("empty string"):(a=a.indexOf(";")>-1?a.replace(";"," "):a,a=a.indexOf("...")>-1?a.replace("...","...#be size#"):a,handleInput(worldSplitter(a)));document.getElementById("expInput").value=
+        "";document.getElementById("expInput").focus();updateProgressBar()},0)}function setOnPastePlaceholder(){document.getElementById("expInput").placeholder="PASTE AREA, Paste here!                             \u00a0                                                    You see a shooting star! ... ... looks to be size 10. Friends List RuneScape 39"}
+    function startUTCClock(){var a=new Date;let b=a.getUTCHours(),c=a.getUTCMinutes();a=a.getSeconds();b=checkTime(b);c=checkTime(c);a=checkTime(a);document.getElementById("utc_clock").innerHTML=`<a title="The current in-game time">UTC:</a> ${b}:${c} <small>${a}</small>`}function checkTime(a){a<10&&(a="0"+a);return a}
+    function trackUnixTimeChange(){const a=window.speechSynthesis;let b=Math.floor(Date.now()/1E3);const c=Date.now(),f=()=>{var d=Math.floor(Date.now()/1E3);startUTCClock();d!==b&&(b=d);if(UTCDebug===!0&&(d===UTCDebugNextMinute-6&&(UTCDebugNextMinute=Math.floor(Date.now()/1E3/60)*60+120,activatePIPS()),d===UTCDebugNextMinute-12)){var l=new Date(UTCDebugNextMinute*1E3);l=`At the tone, ${l.getUTCHours()} Hours ${l.getUTCMinutes()} Minutes, Coordinated Universal Time`;a.speak(new SpeechSynthesisUtterance(l))}d===
+    G_alarm_time-6&&funcChb4()&&G_alarm_time!==G_alarm2_time&&activatePIPS();d===G_alarm_time-12&&funcChb4()&&G_alarm_time!==G_alarm2_time&&(l=new Date(G_alarm_time*1E3),l=`At the tone, ${l.getUTCHours()} Hours ${l.getUTCMinutes()} Minutes, Coordinated Universal Time`,a.speak(new SpeechSynthesisUtterance("Wave")),pip(),a.speak(new SpeechSynthesisUtterance(l)));d===G_alarm2_time-6&&funcChb4()&&activatePIPS();d===G_alarm2_time-13&&funcChb4()&&(l=new Date(G_alarm2_time*1E3),l=`At the tone, ${l.getUTCHours()} Hours ${l.getUTCMinutes()} Minutes, Coordinated Universal Time`,
+        a.speak(new SpeechSynthesisUtterance("Landing")),pip(),a.speak(new SpeechSynthesisUtterance(l)));d===G_alarm3_time-6&&funcChb4()&&activatePIPS();d===G_alarm3_time-14&&funcChb4()&&(d=new Date(G_alarm3_time*1E3),d=`At the tone, ${d.getUTCHours()} Hours ${d.getUTCMinutes()} Minutes, Coordinated Universal Time`,a.speak(new SpeechSynthesisUtterance("5 Minute Reminder")),pip(),a.speak(new SpeechSynthesisUtterance(d)))};setTimeout(()=>{f();setInterval(f,1E3)},1E3-c%1E3)}
+    function activityColourFlipper(){activityIndColour===0?(activityIndColour=1,document.getElementById("statusCell").style.backgroundColor="lightblue",document.getElementById("statusCell").placeholder="  \ud83d\udd2d"):(activityIndColour=0,document.getElementById("statusCell").style.backgroundColor="lightgreen",document.getElementById("statusCell").placeholder="  \u2604\ufe0f")}
+    function activityUpdate(){document.getElementById("status_lastworld").innerHTML="Last World Scoped: "+lastWorldScoped;activityIndChange!==lastWorldScoped&&activityColourFlipper();activityIndChange=lastWorldScoped}
+    document.getElementById("toggleTheme").addEventListener("click",function(){document.getElementsByTagName("body")[0].classList.toggle("darktheme");document.getElementsByTagName("input")[0].classList.toggle("darktheme");document.getElementsByTagName("input")[4].classList.toggle("darkthemeTextBox");document.getElementsByTagName("input")[6].classList.toggle("darktheme");document.getElementsByTagName("textarea")[0].classList.toggle("darkthemeTextBox");document.getElementById("input_header").classList.toggle("ih_default");
+        document.getElementById("input_header").classList.toggle("darktheme");document.getElementById("expInput").focus();document.getElementById("statusBoxMainDiv").classList.toggle("ih_default");document.getElementById("statusBoxMainDiv").classList.toggle("darktheme");document.getElementById("statusBoxC").children[0].children[0].classList.toggle("ih_default");document.getElementById("statusBoxC").children[0].children[0].classList.toggle("darktheme")});
+    document.getElementById("toggleMonospace").addEventListener("click",function(){document.getElementsByTagName("body")[0].classList.toggle("monospace");document.getElementById("expInput").focus()});
+    document.getElementById("waveTimeLimitButton").addEventListener("click",function(){var a=document.getElementById("waveTimeLimit").value;if(a)G_waveTimeLimit=(new Date(a)).getTime(),G_alarm_time=G_waveTimeLimit/1E3,a=(new Date(G_waveTimeLimit)).toISOString(),document.getElementById("waveTlimIndcator").innerHTML="Wave t-lim: <small>\ud83d\udd12\u23f0("+a.substring(11,16)+")<sl-relative-time date="+a+' format="short" sync></sl-relative-time></small>',document.getElementById("waveTimeAlertSuccess").show();
+    else{if(G_waveTimeLimit===0&&confirm("\u2753 \nAuto calculate next, wave time? \ud83d\uddf3\ufe0f\u23f1\ufe0f")){a=Date.now();G_waveTimeLimit=Math.ceil((a-17547408E5)/768E4)*768E4+17547408E5;G_alarm_time=G_waveTimeLimit/1E3;a=(new Date(G_waveTimeLimit)).toISOString();document.getElementById("waveTlimIndcator").innerHTML="Wave t-lim: <small>\ud83d\udd12\u23f0("+a.substring(11,16)+")<sl-relative-time date="+a+' format="short" sync></sl-relative-time></small>';document.getElementById("waveTimeAlertSuccess").show();
+        document.getElementById("expInput").focus();return}document.getElementById("generalAlertWarning").innerText="\u2139\ufe0f Information Alert,\nPlease enter in a time.";document.getElementById("generalAlertWarning").show();console.log("Please select a time.")}document.getElementById("expInput").focus()});
+    document.getElementById("plusWaveButton").addEventListener("click",function(){if(G_waveTimeLimit!==0&&confirm("\u2139\ufe0f \nConfirm to add 2 Hours 8 Minutes, \nto the Wave Time Limit. \ud83d\udd51")){G_waveTimeLimit+=768E4;G_alarm_time=G_waveTimeLimit/1E3;var a=(new Date(G_waveTimeLimit)).toISOString();document.getElementById("waveTlimIndcator").innerHTML="Wave t-lim: <small>\ud83d\udd12\u23f0("+a.substring(11,16)+")<sl-relative-time date="+a+' format="short" sync></sl-relative-time></small>';document.getElementById("timeAddAlertSuccess").show()}else{if(G_waveTimeLimit===
+        0&&confirm("\u2753 \nAuto calculate next, wave time? \ud83d\uddf3\ufe0f\u23f1\ufe0f")){a=Date.now();G_waveTimeLimit=Math.ceil((a-17547408E5)/768E4)*768E4+17547408E5;G_alarm_time=G_waveTimeLimit/1E3;a=(new Date(G_waveTimeLimit)).toISOString();document.getElementById("waveTlimIndcator").innerHTML="Wave t-lim: <small>\ud83d\udd12\u23f0("+a.substring(11,16)+")<sl-relative-time date="+a+' format="short" sync></sl-relative-time></small>';document.getElementById("waveTimeAlertSuccess").show();document.getElementById("expInput").focus();
+        return}document.getElementById("generalAlertWarning").innerText="\u2139\ufe0f Information Alert,\nAction cancelled.";document.getElementById("generalAlertWarning").show();console.log("Please set a time, first.")}document.getElementById("expInput").focus()});
+    document.getElementById("alarmWorldButton").addEventListener("click",function(){var a=Number(document.getElementById("alarmWorldTextbox").value);if(a===void 0)return!1;var b=document.getElementById("datatable").getElementsByTagName("tbody")[0];const c=[];for(let f=0;f<b.children.length;f++)if(b.children[f].children[1]!==void 0)try{Number(b.children[f].children[1].textContent.trim().substring(1))===a&&c.push(f)}catch(d){console.log(d)}for(a=0;a<c.length;a++);if(c.length>0){for(a=0;a<b.children.length;a++)colourCell(b.children[a].children[4],
+        "clear");G_alarm2_time=Number(b.children[c[0]].children[8].textContent.trim())/1E3;colourCell(b.children[c[0]].children[4],"alarm");b=(new Date(Number(b.children[c[0]].children[8].textContent.trim()))).toISOString();document.getElementById("starfallAlarm").innerHTML="<small title='World alarm'>\ud83d\uddfa\ufe0f\u23f0: ("+b.substring(11,16)+")<sl-relative-time date="+b+' format="short" sync></sl-relative-time></small>';confirm("5\ufe0f\u20e3\ud83d\udea9 Add 5 minute reminder as well?\nThis will be an additional alarm at 5 mins before and when it lands.")?
+        (G_alarm3_time=G_alarm2_time-300,document.getElementById("starfallAlarm").innerHTML+="<small title='5 min reminder set'>5\ufe0f\u20e3\ud83d\udea9</small><div class=\"divbreak2\"></div>",document.getElementById("generalAlertSuccess").innerText="\u2139\ufe0f World alarm Set + \n5 min reminder set 5\ufe0f\u20e3\ud83d\udea9"):(document.getElementById("starfallAlarm").innerHTML+="<small title='NO reminder active'>\u2139\ufe0f\u2705</small><div class=\"divbreak2\"></div>",document.getElementById("generalAlertSuccess").innerText=
+            "\u2139\ufe0f World alarm Set, \nNO reminder set \u2705");document.getElementById("generalAlertSuccess").show();document.getElementById("activityBlock").style.display="none"}else console.log("Specified world not found."),document.getElementById("generalAlertWarning").innerText="\u2139\ufe0f\u2754 \nSpecified world not found.",document.getElementById("generalAlertWarning").show();document.getElementById("expInput").focus()});
+    document.getElementById("alarmWorldCLButton").addEventListener("click",function(){confirm("\u2139\ufe0f\u2753 \nClear world alarm(s)?")?(G_alarm3_time=G_alarm2_time=0,document.getElementById("activityBlock").style.display="inline",document.getElementById("starfallAlarm").innerHTML="",document.getElementById("generalAlertSuccess").innerText="\u2705 World alarm(s) cleared",document.getElementById("generalAlertSuccess").show()):(document.getElementById("generalAlertWarning").innerText="\u2139\ufe0f Information Alert,\nAction cancelled.",
+        document.getElementById("generalAlertWarning").show());document.getElementById("expInput").focus()});
+    document.getElementById("tlimCLButton").addEventListener("click",function(){confirm("\u2139\ufe0f\u2753 \nClear Wave time limit?")?(G_alarm_time=G_waveTimeLimit=0,document.getElementById("waveTlimIndcator").innerHTML="",document.getElementById("waveTlimIndcator").innerText="Wave t-limit: \ud83d\udd15 UNSET",document.getElementById("generalAlertSuccess").innerText="\u2705 Wave t-limit cleared",document.getElementById("generalAlertSuccess").show()):(document.getElementById("generalAlertWarning").innerText=
+        "\u2139\ufe0f Information Alert,\nAction cancelled.",document.getElementById("generalAlertWarning").show());document.getElementById("expInput").focus()});document.getElementById("resyncSLRButton").addEventListener("click",function(){resync_SlRelativeTime();document.getElementById("generalAlertSuccess").innerText="\ud83d\udd01 \nAll Relative Time fields \nresynchronised.";document.getElementById("generalAlertSuccess").show();document.getElementById("expInput").focus()});
+    document.getElementById("buttonScrollToTop").addEventListener("click",function(){activateScrollToTop();document.getElementById("expInput").focus()});document.getElementById("buttonScrollToTB").addEventListener("click",function(){window.scroll(0,0);document.getElementById("input_header").scrollIntoView({behavior:"smooth"});document.getElementById("expInput").focus()});
+    document.getElementById("clearTableButton").addEventListener("click",function(){document.getElementById("clearTableButton2").style.display="inline";document.getElementById("generalAlertWarning").innerText="\u26a0\ufe0f Warning,\nThis is irreversible.\nClick \ud83d\uded1 to confirm.";document.getElementById("generalAlertWarning").show();document.getElementById("expInput").focus()});
+    document.getElementById("clearTableButton2").addEventListener("click",function(){const a=document.getElementById("clearTableButton2");confirm("\u26a0\ufe0f \nConfirm to purge the whole table, \nThis is irreversible. \ud83d\uded1")?(document.getElementById("datatable").getElementsByTagName("tbody")[0].replaceChildren(),a.style.display="none",document.getElementById("generalAlertSuccess").innerText="\u2705 Table cleared",document.getElementById("generalAlertSuccess").show()):(document.getElementById("generalAlertWarning").innerText=
+        "\u2139\ufe0f Information Alert,\nAction cancelled.",document.getElementById("generalAlertWarning").show(),a.style.display="none");document.getElementById("expInput").focus()});
+    document.getElementById("buttonLineBreak").addEventListener("click",function(){var a=document.getElementById("datatable").getElementsByTagName("tbody")[0];a=(funcChb3()?a.insertRow(0):a.insertRow()).insertCell(0);const b=document.createElement("button");b.textContent="\u23cf\ufe0f";b.addEventListener("click",function(){this.closest("tr").remove()});a.appendChild(b);document.getElementById("expInput").focus()});
+    document.getElementById("buttonTableQuery").addEventListener("click",function(){function a(v,q){const n=[];let m=0;q==="S"?m=1:q==="R"&&(m=2);for(q=0;q<g.children.length;q++){let p="";if(m===1)try{p=g.children[q].children[3].textContent}catch(w){}else if(m===2)try{p=g.children[q].children[2].textContent}catch(w){}p.includes(String(v))&&n.push(q)}return n}function b(v,q){let n="";for(let m=0;m<v.length;m++){let p="";q==="whole"?p=g.children[v[m]].children[4].children[0].children[1].textContent.trim():
+        q==="part"?p=g.children[v[m]].children[4].children[0].children[1].textContent.substring(9).trim():q==="export"?(p=g.children[v[m]].children[7].textContent.trim(),p.indexOf("\u00ab\u300b")===-1&&(p+="\u300b")):q==="parsed_input"&&(p="/#/S/I/",p+=g.children[v[m]].children[5].children[0].children[1].textContent,p+="/H/",p+=g.children[v[m]].children[7].textContent,p+="/T/",p+=g.children[v[m]].children[8].textContent,p+="/E/#/");n+=p;n+="\n"}return n}var c=document.getElementById("queryAlertSuccess");
+        const f=document.getElementById("querySortAlertSuccess");var d=String(document.getElementById("exportOptionsRegionSelect").value);const l=String(document.getElementById("exportOptionsSizeSelect").value),g=document.getElementById("datatable").getElementsByTagName("tbody")[0];let h=[],t=[],u=[];var k=[],e="";if(d==="default"&&l==="default"){document.getElementById("sortDupButton").click();document.getElementById("sortWorldButton").click();document.getElementById("sortTimeButton").click();document.getElementById("sortSizeButton").click();
+            var r=0;h=a("s10","S");t=a("s9","S");u=a("s8","S");k=a("s7","S");h.length>0?e+="`Size 10:`\n":(e+="`Size 10:`\nNo stars found size 10.\n",r+=1);e+=b(h,"part");t.length>0?e+="\n`Size 9:`\n":(e+="\n`Size 9:`\nNo stars found size 9.\n",r+=1);e+=b(t,"part");u.length>0?e+="\n`Size 8:`\n":(e+="\n`Size 8:`\nNo stars found size 8.\n",r+=1);e+=b(u,"part");e=k.length>0?e+"\n`Size 7:`\n":e+"\n`Size 7:`\nNo stars found size 7.\n";r+=h.length+t.length+u.length;r=16-r;if(r<=k.length){for(var x=0;x<r;x++){var z=
+                g.children[k[x]].children[4].children[0].children[1].textContent.substring(9).trim();e+=z;e+="\n"}e+="_\u2026 (truncated, use filters to see more)_\nSee: <#1284230439661207613> for locations.\n"}else e+=b(k,"part"),e+="See: <#1284230439661207613> for locations.\n";h=[];h=a("Feldip","R");e=h.length>0?e+"\n\nStar(s) called for the [Starstruck](<https://runescape.wiki/w/Starstruck>) achievement:\n\n":e+"\n\nStar(s) called for the [Starstruck](<https://runescape.wiki/w/Starstruck>) achievement:\nNo stars found for the Starstruck achievement.\n";
+            h.length>0&&(e=e+"[Feldip Hills](<https://starfind.net/maps/#feld-feldip-hills>)\n"+b(h,"whole"))}else{if(d==="Starstruck"){for(r=0;r<g.children.length;r++)try{const n=g.children[r].children[2].textContent;n.includes("Feldip")&&h.push(r);if(n.includes("Crandor")){const m=g.children[r].children[1].textContent.trim().substring(1);t.push([r,m])}}catch(n){console.log(n)}const q=new Set("3 7 8 11 17 19 20 29 33 34 38 41 43 55 57 61 80 81 94 108 120 122 135 136 141 210 215 225 236 239 245 249 250 251 255 256".split(" "));
+            r=t.filter(n=>q.has(n[1]));r=r.map(n=>n[0]);e=h.length>0||r.length>0?e+"Star(s) called for the [Starstruck](<https://runescape.wiki/w/Starstruck>) achievement:\n\n":e+"No stars found for the Starstruck achievement.\n";h.length>0&&(e=e+"[Feldip Hills](<https://starfind.net/maps/#feld-feldip-hills>)\n"+b(h,"whole"));r.length>0&&(h.length>0&&(e+="\n"),e=e+"[Crandor](<https://starfind.net/maps/#ck-crandor-karamja>) [F2P]\n"+b(r,"whole"))}else if(d==="defaultf2p"){document.getElementById("sortDupButton").click();
+            document.getElementById("sortWorldButton").click();document.getElementById("sortTimeButton").click();document.getElementById("sortSizeButton").click();for(k=0;k<g.children.length;k++)try{const n=g.children[k].children[3].textContent;if(n.includes("s5")||n.includes("Average")){const m=g.children[k].children[1].textContent.trim().substring(1);h.push([k,m])}}catch(n){console.log(n)}const q=new Set("3 7 8 11 17 19 20 29 33 34 38 41 43 55 57 61 80 81 94 108 120 122 135 136 141 210 215 225 236 239 245 249 250 251 255 256".split(" "));
+            k=h.filter(n=>q.has(n[1]));k=k.map(n=>n[0]);if(k.length>0)if(e+="[F2P] `Size 5/Average 4-6:`\n\n",16<k.length){for(x=0;x<16;x++)z=g.children[k[x]].children[4].children[0].children[1].textContent.trim(),e+=z,e+="\n";e+="_\u2026 (truncated, use filters to see more)_\nSee: <#1284230439661207613> for locations.\n"}else e+=b(k,"whole"),e+="See: <#1284230439661207613> for locations.\n";else e+="`Size 5/Average 4-6:`\nNo stars found size 5/Average 4-6.\n";h=[];for(k=0;k<g.children.length;k++)try{g.children[k].children[2].textContent.includes("Crandor")&&
+            (r=g.children[k].children[1].textContent.trim().substring(1),h.push([k,r]))}catch(n){console.log(n)}k=h.filter(n=>q.has(n[1]));k=k.map(n=>n[0]);e=k.length>0?e+"\n\nStar(s) called for the [Starstruck](<https://runescape.wiki/w/Starstruck>) achievement:\n\n":e+"\n\nStar(s) called for the [Starstruck](<https://runescape.wiki/w/Starstruck>) achievement:\nNo stars found for the Starstruck achievement.\n";k.length>0&&(e=e+"[Crandor](<https://starfind.net/maps/#ck-crandor-karamja>) [F2P]\n"+b(k,"whole"))}else if(d===
+            "7\ufe0f\u20e3")h=a("s10","S"),t=a("s9","S"),u=a("s8","S"),k=a("s7","S"),h=h.concat(t,u,k),t=[],u=[],k=[],t=a("Feldip","R"),funcChb3()?(u=h.reverse(),k=t.reverse(),e+=b(k,"export"),e=e+"\u300a\u00abNaN\u00ab\u26a0\ufe0f\u00abNaN\u00ab\u26a0\ufe0f\u00abWRS\u00ab\u300b\n"+b(u,"export")):(e+=b(h,"export"),e=e+"\u300a\u00abNaN\u00ab\u26a0\ufe0f\u00abNaN\u00ab\u26a0\ufe0f\u00abWRS\u00ab\u300b\n"+b(t,"export"));else{if(d==="\ud83c\udde9\ud83d\udcca"){for(c=0;c<g.children.length;c++)try{const q=g.children[c].children[1].textContent.trim().substring(1);
+            h.push([c,q])}catch(q){console.log(`Blank line, found in row ${c}`)}d=function(q){const n={},m=[];q.forEach((p,w)=>{p=p[1];n[p]||(n[p]=[]);n[p].push(w)});for(const p of Object.values(n))p.length>1&&m.push(...p);return m}(h);c=[];for(e=0;e<d.length;e++)c.push(h[d[e]][0]);for(d=0;d<g.children.length;d++)g.children[d].children[1]!==void 0&&colourCell(g.children[d].children[1],"clear");if(c.length!==0)for(d=0;d<c.length;d++)colourCell(g.children[c[d]].children[1],"alert");document.getElementById("exportOptionsSizeSelect").value=
+            "default";document.getElementById("exportOptionsRegionSelect").value="default";f.show();return}if(d==="\ud83c\uddfc\ud83d\udcca"){c=g.children.length;for(--c;c>=0;c--)g.children[c].children[1]===void 0&&g.children[c].remove();for(c=0;c<g.children.length;c++)if(g.children[c].children[1]!==void 0)try{x=g.children[c].children[1].textContent.trim().substring(1),h.push([c,x])}catch(q){console.log(q)}c=[];for(d=0;d<h.length;d++)c[d]=d;if(h.length>0){d=c.sort((q,n)=>{const m=Number(h[q][1]),p=Number(h[n][1]);
+            return isNaN(m)||isNaN(p)?isNaN(m)&&isNaN(p)?String(h[q][1]).localeCompare(h[n][1]):isNaN(m)&&!isNaN(p)?1:-1:m-p});c=g;e=Array.from(c.children);r=[];for(k=0;k<d.length;k++)r.push(h[d[k]]);r=[];for(k=0;k<d.length;k++)r.push(e[d[k]]);c.replaceChildren();for(d=0;d<r.length;d++)c.appendChild(r[d])}else console.log("Nothing to sort. [World]");document.getElementById("exportOptionsSizeSelect").value="default";document.getElementById("exportOptionsRegionSelect").value="default";f.show();return}if(d==="\ud83c\uddf9\ud83d\udcca"){c=
+            g.children.length;for(--c;c>=0;c--)g.children[c].children[1]===void 0&&g.children[c].remove();for(c=0;c<g.children.length;c++)if(g.children[c].children[1]!==void 0)try{z=g.children[c].children[8].textContent.trim(),h.push([c,z])}catch(q){console.log(q)}c=[];for(d=0;d<h.length;d++)c[d]=d;if(h.length>0){e=c.sort((q,n)=>{const m=Number(h[q][1]),p=Number(h[n][1]);return isNaN(m)||isNaN(p)?isNaN(m)&&isNaN(p)?String(h[q][1]).localeCompare(h[n][1]):isNaN(m)&&!isNaN(p)?1:-1:m-p});c=g;r=Array.from(c.children);
+            d=[];for(k=0;k<e.length;k++)d.push(r[e[k]]);c.replaceChildren();for(e=0;e<d.length;e++)c.appendChild(d[e])}else console.log("Nothing to sort. [Landing]");document.getElementById("exportOptionsSizeSelect").value="default";document.getElementById("exportOptionsRegionSelect").value="default";f.show();return}if(d==="\ud83c\uddf8\ud83d\udcca"){c=g.children.length;for(--c;c>=0;c--)g.children[c].children[1]===void 0&&g.children[c].remove();q();function q(){for(var n=0;n<g.children.length;n++)if(g.children[n].children[1]!==
+            void 0)try{var m=g.children[n].children[3].textContent.trim().substring(1).trim();isNaN(Number(m))&&(m=m.indexOf("Very Big")>-1?"A":m,m=m.indexOf("Fairly Big")>-1?"C":m,m=m.indexOf("Fairly Small")>-1?"E":m,m=m.indexOf("Very Small")>-1?"G":m,m=m.indexOf("Big")>-1?"B":m,m=m.indexOf("Average")>-1?"D":m,m=m.indexOf("Small")>-1?"F":m);h.push([n,m])}catch(w){console.log(w)}n=[];for(m=0;m<h.length;m++)n[m]=m;if(h.length>0){var p=n.sort((y,C)=>{const A=Number(h[C][1]),B=Number(h[y][1]);return isNaN(A)||isNaN(B)?
+            isNaN(A)&&isNaN(B)?String(h[y][1]).localeCompare(h[C][1]):isNaN(A)&&!isNaN(B)?1:-1:A-B});n=g;const w=Array.from(n.children);m=[];for(let y=0;y<p.length;y++)m.push(w[p[y]]);n.replaceChildren();for(p=0;p<m.length;p++)typeof m[p]==="object"&&n.appendChild(m[p])}else console.log("Nothing to sort. [Size]")}document.getElementById("exportOptionsSizeSelect").value="default";document.getElementById("exportOptionsRegionSelect").value="default";f.show();return}if(d==="\u26d4"){for(r=0;r<g.children.length;r++)g.children[r].children[5].children[0].children[0].textContent.includes("\u26d4")&&
+        h.push(r);h.length>0?(e=e+"Error report - "+(new Date).toISOString(),e=e+":\n\nTool state:\n"+`GP:${G_progress_bar} LW:${lastWorldScoped} TL:${g.children.length}\n`,e+=`GW:${G_waveTimeLimit} GA:${G_alarm_time} GA2:${G_alarm2_time} GA3:${G_alarm3_time}\n`,e+=`chbx1:${document.getElementById("chbx1").checked} chbx2:${funcChb2()} chbx3:${funcChb3()} chbx4:${funcChb4()}\n`,e=e+"\nParsed input:\n"+b(h,"parsed_input"),e=e+"\nExport:\n"+b(h,"export"),e=e+"\nReport:\n"+b(h,"whole")):e+="Error report:\nNo errors found.\n"}else if(d!==
+            "default"||l!=="default")e=v(d,l)}function v(q,n){var m=String(q),p=String(n),w="";q==="default"&&n==="default"||console.log(`Query Error: filter1:${q} filter2:${n}`);if(q!=="default"&&n!=="default"){q=a(m,"R");n=[];for(m=0;m<q.length;m++){w="";try{w=g.children[q[m]].children[3].textContent}catch(y){}w.includes(String(p))&&n.push(q[m])}p=n;w=b(p,"whole")}else q!=="default"&&n==="default"?(q=a(m,"R"),w=b(q,"whole")):q==="default"&&n!=="default"&&(q=a(p,"S"),w=b(q,"whole"));return w}}copyToClipboard(e);
+        document.getElementById("expInput").focus();document.getElementById("exportOptionsSizeSelect").value="default";document.getElementById("exportOptionsRegionSelect").value="default";d==="\ud83c\uddfc\ud83d\udcca"||d==="\ud83c\uddf8\ud83d\udcca"||d==="\ud83c\uddf9\ud83d\udcca"||d==="\ud83c\udde9\ud83d\udcca"?f.show():c.show()});
+    document.getElementById("sortDupButton").addEventListener("click",function(){document.getElementById("exportOptionsRegionSelect").value="\ud83c\udde9\ud83d\udcca";document.getElementById("buttonTableQuery").click();document.getElementById("expInput").focus()});document.getElementById("sortWorldButton").addEventListener("click",function(){document.getElementById("exportOptionsRegionSelect").value="\ud83c\uddfc\ud83d\udcca";document.getElementById("buttonTableQuery").click();document.getElementById("expInput").focus()});
+    document.getElementById("sortSizeButton").addEventListener("click",function(){document.getElementById("exportOptionsRegionSelect").value="\ud83c\uddf8\ud83d\udcca";document.getElementById("buttonTableQuery").click();document.getElementById("expInput").focus()});document.getElementById("sortTimeButton").addEventListener("click",function(){document.getElementById("exportOptionsRegionSelect").value="\ud83c\uddf9\ud83d\udcca";document.getElementById("buttonTableQuery").click();document.getElementById("expInput").focus()});
+    document.getElementById("exportTable7plusButton").addEventListener("click",function(){document.getElementById("exportOptionsRegionSelect").value="7\ufe0f\u20e3";document.getElementById("buttonTableQuery").click()});
+    document.getElementById("exportTableButton").addEventListener("click",function(){let a="";const b=document.getElementById("datatable").getElementsByTagName("tbody")[0];if(funcChb3()===!1)for(var c=0;c<b.children.length;c++)b.children[c].children[7]!==void 0&&b.children[c].children[7].textContent.indexOf("\u00ab\u300b")===-1?(a+=b.children[c].children[7].textContent,a+="\u300b"):b.children[c].children[7]!==void 0&&(a+=b.children[c].children[7].textContent);else for(c=b.children.length-1;c>=0;c--)b.children[c].children[7]!==
+    void 0&&b.children[c].children[7].textContent.indexOf("\u00ab\u300b")===-1?(a+=b.children[c].children[7].textContent,a+="\u300b"):b.children[c].children[7]!==void 0&&(a+=b.children[c].children[7].textContent);copyToClipboard(a);document.getElementById("expInput").focus();document.getElementById("SGTEButtonSuccess").show()});document.getElementById("chbx1").addEventListener("click",function(){document.getElementById("expInput").focus();funcChb1()});
+    document.getElementById("chbx2").addEventListener("click",function(){document.getElementById("expInput").focus();funcChb2()});document.getElementById("chbx3").addEventListener("click",function(){document.getElementById("expInput").focus();funcChb3()});document.getElementById("chbx4").addEventListener("click",function(){document.getElementById("expInput").focus();funcChb4()});
+    function funcChb1(){document.getElementById("chbx1").checked?document.getElementById("input_header").classList.add("input_header"):document.getElementById("input_header").classList.remove("input_header");jsMediaQueryMain()}function funcChb2(){return document.getElementById("chbx2").checked}function funcChb3(){return document.getElementById("chbx3").checked}function funcChb4(){return document.getElementById("chbx4").checked}
+    function activateScrollToTop(){window.scrollTo({top:0,left:0,behavior:"smooth"})}function updateProgressBar(){G_progress_bar=document.getElementById("datatable").getElementsByTagName("tbody")[0].children.length/91*100;document.getElementById("potatobar").value=G_progress_bar}function pip(){const a=new AudioContext,b=a.createOscillator();b.frequency.setValueAtTime(450,a.currentTime);b.connect(a.destination);b.start();b.stop(a.currentTime+.1)}
+    function activatePIPS(){const a=new AudioContext;let b=0;const c=setInterval(()=>{if(b<5){var f=a.createOscillator();f.frequency.setValueAtTime(1E3,a.currentTime);f.connect(a.destination);f.start();f.stop(a.currentTime+.1);b++}else b===5&&(f=a.createOscillator(),f.frequency.setValueAtTime(1E3,a.currentTime),f.connect(a.destination),f.start(),f.stop(a.currentTime+.5),clearInterval(c))},1E3)}
+    function resync_SlRelativeTime(){for(let a=0;a<document.getElementsByTagName("sl-relative-time").length;a++)document.getElementsByTagName("sl-relative-time")[a].removeAttribute("sync"),document.getElementsByTagName("sl-relative-time")[a].setAttribute("sync","")}function F_getWaveTime(){if(G_alarm_time!==0){const a=`<t:${G_alarm_time}:R> | <t:${G_alarm_time}:F> | \`${(new Date(G_waveTimeLimit)).toISOString()}\``;console.log(a);copyToClipboard(a)}else console.log("No wave time set.")}
+    function beep(){pip()}
+    function jsMediaQueryMain(){const a=window.matchMedia("(max-width: 1056px)");window.matchMedia("(max-width: 660px)").matches?document.getElementById("chbx1").checked?(document.getElementById("statusBoxMainDiv").classList.remove("sbPinFloat"),document.getElementById("statusBoxA").classList.remove("sbPinFloatA"),document.getElementById("statusBoxB").classList.remove("sbPinFloatB"),document.getElementById("statusBoxC").classList.remove("sbPinFloatC"),document.getElementById("statusBoxMainDiv").classList.add("sbPinFloatUnlocked"),document.getElementById("statusBoxA").children[0].open=
+        !1,document.getElementById("statusBoxB").children[0].open=!1,document.getElementById("statusBoxC").children[0].open=!1,document.getElementById("input_header").scrollIntoView({behavior:"smooth"})):(document.getElementById("statusBoxMainDiv").classList.remove("sbPinFloat"),document.getElementById("statusBoxMainDiv").classList.add("sbPinFloatUnlocked")):a.matches?document.getElementById("chbx1").checked?(document.getElementById("statusBoxMainDiv").classList.remove("sbPinFloat"),document.getElementById("statusBoxMainDiv").classList.remove("sbPinFloatUnlocked"),
+        document.getElementById("statusBoxA").classList.add("sbPinFloatA"),document.getElementById("statusBoxB").classList.add("sbPinFloatB"),document.getElementById("statusBoxC").classList.add("sbPinFloatC"),document.getElementById("statusBoxB").children[0].open=!1,document.getElementById("statusBoxA").children[0].open=!0,document.getElementById("statusBoxC").children[0].open=!0,window.scrollTo(0,0),document.getElementById("input_header").scrollIntoView({behavior:"smooth"})):(document.getElementById("statusBoxMainDiv").classList.remove("sbPinFloat"),
+        document.getElementById("statusBoxA").classList.remove("sbPinFloatA"),document.getElementById("statusBoxB").classList.remove("sbPinFloatB"),document.getElementById("statusBoxC").classList.remove("sbPinFloatC"),document.getElementById("statusBoxMainDiv").classList.add("sbPinFloatUnlocked")):(document.getElementById("chbx1").checked&&setTimeout(function(){activateScrollToTop()},100),document.getElementById("statusBoxMainDiv").classList.remove("sbPinFloatUnlocked"),document.getElementById("statusBoxA").classList.remove("sbPinFloatA"),
+        document.getElementById("statusBoxB").classList.remove("sbPinFloatB"),document.getElementById("statusBoxC").classList.remove("sbPinFloatC"),document.getElementById("statusBoxMainDiv").classList.add("sbPinFloat"),document.getElementById("statusBoxB").children[0].open=!0,document.getElementById("statusBoxA").children[0].open=!0,document.getElementById("statusBoxC").children[0].open=!0)}window.matchMedia("(max-width: 660px)").addEventListener("change",jsMediaQueryMain);
+    window.matchMedia("(max-width: 1056px)").addEventListener("change",jsMediaQueryMain);window.addEventListener("load",function(){setTimeout(function(){setOnPastePlaceholder();trackUnixTimeChange();activityUpdate();funcChb1();funcChb2();funcChb3();funcChb4();jsMediaQueryMain();activateScrollToTop();document.getElementById("expInput").focus()},100)});
 
-
-
-    <script>
-        //========================== MAIN_FUNCTION_START
-        function handleInput(input) {
-            // Get the input value from the textbox or prompt
-
-            if (input) {
-                // Split the input into an array based on commas
-                let columns = input.split(";");
-
-                // Check if the input has exactly 2 values
-                if (columns.length === 2) {
-                    // Get the table body
-                    let table = document.getElementById("datatable").getElementsByTagName("tbody")[0];
-
-                    // Create a new row
-                    let newRow;
-                    if(funcChb3()){
-                        newRow = table.insertRow(0);
-                    }
-                    else{
-                        newRow = table.insertRow();
-                    }
-
-                    // Add cells with the input data
-                    let cell1 = newRow.insertCell(0);
-                    cell1.textContent = columns[0].trim();
-                    lastWorldScoped = columns[0].trim();
-
-                    let cell2 = newRow.insertCell(1);
-                    cell2.textContent = columns[1].trim();
-
-                    // Add a cell for the timestamp
-                    let timestampCell = newRow.insertCell(2);
-                    // Gets the current UNIX time, calculates and strips to the minute.
-                    let currentTimestamp = Math.floor((Date.now()/1000)/60)*60*1000;
-                    timestampCell.textContent = currentTimestamp;
-
-                    // Add a cell with the button
-                    let esCell = newRow.insertCell(3);
-                    let actionCell = newRow.insertCell(4);
-                    let buttonGC = document.createElement("button");
-                    buttonGC.textContent = "Generate & Copy";
-
-                    // Add click event to the button
-                    buttonGC.addEventListener("click", function() {
-                        generateDiscord(cell1,cell2,timestampCell,esCell,actionCell);
-                    });
-
-                    actionCell.appendChild(buttonGC);
-
-                    activityUpdate(); // Trigger a lookup of activity
-
-                    // Option to generate to clipboard on input
-                    if(funcChb2()){
-                        generateDiscord(cell1,cell2,timestampCell,esCell,actionCell);
-                    }
-
-                    // Clear the textbox after adding the row
-                    document.getElementById("csvInput").value = "";
-                } else {
-                    alert("Please enter exactly 2 values separated by a Semicolon.");
-                }
-            }
-        }
-        //========================== MAIN_FUNCTION_END
-        
-        //========================== MAIN_GEN_FUNCTION_START
-        function generateDiscord(cell1,cell2,tsCell,esCell,aCell) {
-            let column1Data = cell1.textContent;
-            let inputphrase = cell2.textContent;
-
-            //========================== LOCATION_START
-            // elseif ladder to determine the location
-            let location_of_star = "location";
-
-            if(inputphrase.indexOf("Anachronia") > -1 || inputphrase.indexOf("onia") > -1){
-                location_of_star = "Anachronia";
-            }
-            else if(inputphrase.indexOf("Asgarnia") > -1 || inputphrase.indexOf("rnia") > -1){
-                location_of_star = "Asgarnia";
-            }
-            else if(inputphrase.indexOf("Ashdale") > -1 || inputphrase.indexOf("dale") > -1){
-                location_of_star = "Ashdale";
-            }
-            else if(inputphrase.indexOf("Crandor") > -1 || inputphrase.indexOf("amja") > -1){
-                location_of_star = "Crandor/Karamja";
-            }
-            else if(inputphrase.indexOf("Daemonheim") > -1 || inputphrase.indexOf("sula") > -1){
-                location_of_star = "Daemonheim";
-            }
-            else if(inputphrase.indexOf("Feldip") > -1 || inputphrase.indexOf("ills") > -1){
-                location_of_star = "Feldip Hills";
-            }
-            else if(inputphrase.indexOf("Fremennik") > -1 || inputphrase.indexOf("unar") > -1){
-                location_of_star = "Fremennik/Lunar Isle";
-            }
-            else if(inputphrase.indexOf("Kandarin") > -1 || inputphrase.indexOf("arin") > -1){
-                location_of_star = "Kandarin";
-            }
-            else if(inputphrase.indexOf("Desert") > -1 || inputphrase.indexOf("dian") > -1){
-                location_of_star = "Kharidian Desert";
-            }
-            else if(inputphrase.indexOf("Grove") > -1 || inputphrase.indexOf("ost") > -1){
-                location_of_star = "Lost Grove";
-            }
-            else if(inputphrase.indexOf("Menaphos") > -1 || inputphrase.indexOf("phos") > -1){
-                location_of_star = "Menaphos";
-            }
-            else if(inputphrase.indexOf("Misthalin") > -1 || inputphrase.indexOf("alin") > -1){
-                location_of_star = "Misthalin";
-            }
-            else if(inputphrase.indexOf("Morytania") > -1 || inputphrase.indexOf("armless") > -1){
-                location_of_star = "Morytania/Mos Le'Harmless";
-            }
-            else if(inputphrase.indexOf("Piscatoris") > -1 || inputphrase.indexOf("nnwn") > -1){
-                location_of_star = "Piscatoris/Gnome/Tirannwn";
-            }
-            else if(inputphrase.indexOf("Tuska") > -1 || inputphrase.indexOf("uska") > -1){
-                location_of_star = "Tuska";
-            }
-            else if(inputphrase.indexOf("Wilderness") > -1 || inputphrase.indexOf("derness") > -1){
-                location_of_star = "Wilderness";
-            }
-            else {
-                location_of_star = "ERROR-UNDEF-LOC";
-            }
-            //========================== LOCATION_END
-            
-            //========================== TIME_START
-            const time_text_start = "next";
-            const time_text_end = "to ";
-            let time_text_startIndex = inputphrase.indexOf(time_text_start) + 4;
-            let time_text_endIndex = inputphrase.indexOf(time_text_end);
-
-            // Debug see the substring
-            // Substring should only contain the first section of time window ("1 hour 40 minutes" to 2 hours 10 minutes)
-            // inputphrase.substring(time_text_startIndex,time_text_endIndex)
-
-            let hashours_flag = inputphrase.substring(time_text_startIndex,time_text_endIndex).indexOf("hour")
-            let multihours_flag = inputphrase.substring(time_text_startIndex,time_text_endIndex).indexOf("hours")
-            // Get minutes
-            let minutes_to_star = 0;
-            let minutes_index = inputphrase.substring(time_text_startIndex,time_text_endIndex).indexOf("minute")
-            if(multihours_flag>-1){
-                minutes_to_star = parseInt(replaceOCRN(inputphrase.substring(time_text_startIndex,time_text_endIndex).substring(multihours_flag+5,minutes_index)), 10);
-                minutes_to_star += 120;
-            } 
-            else if (multihours_flag===-1 && hashours_flag>-1){
-                minutes_to_star = parseInt(replaceOCRN(inputphrase.substring(time_text_startIndex,time_text_endIndex).substring(hashours_flag+4,minutes_index)), 10);
-                minutes_to_star += 60;
-            } 
-            else if(minutes_index===-1){//when the timer is sub 1 hour, the time is displayed as (45 to 50 minutes)
-                minutes_to_star = parseInt(replaceOCRN(inputphrase.substring(time_text_startIndex,time_text_endIndex)), 10);
-                //console.log(minutes_to_star);
-            } 
-            else {
-                minutes_to_star = parseInt(replaceOCRN(inputphrase.substring(time_text_startIndex,time_text_endIndex).substring(0,minutes_index)), 10);
-            }
-            //========================== TIME_END
-
-            //========================== STAR_SIZE_START
-            const size_text_start = "be";
-            let size_text_startIndex = inputphrase.indexOf(size_text_start) + 2;
-            let size_of_star = "ERROR-UNDEF-SIZE";
-            if(inputphrase.substring(size_text_startIndex).indexOf("size") === 1){
-                // Tier 3 telescope
-                size_of_star = parseInt(replaceOCRN(inputphrase.substring(size_text_startIndex+5)), 10);
-            }
-            else {
-                // if ladder to find size text
-                // Tier 1 telescope
-                if(inputphrase.substring(size_text_startIndex).indexOf("small") > -1){
-                    size_of_star = "Small";
-                }
-                if(inputphrase.substring(size_text_startIndex).indexOf("average") > -1){
-                    size_of_star = "Average";
-                }
-                if(inputphrase.substring(size_text_startIndex).indexOf("big") > -1){
-                    size_of_star = "Big";
-                }
-                // Tier 2 telescope
-                // Placed after to override if using a tier 2 telescope values, don't use this
-                if(inputphrase.substring(size_text_startIndex).indexOf("very small") > -1){
-                    size_of_star = "Small";
-                }
-                if(inputphrase.substring(size_text_startIndex).indexOf("fairly small") > -1){
-                    size_of_star = "Small";
-                }
-                if(inputphrase.substring(size_text_startIndex).indexOf("fairly big") > -1){
-                    size_of_star = "Average";
-                }
-                if(inputphrase.substring(size_text_startIndex).indexOf("very big") > -1){
-                    size_of_star = "Big";
-                }
-            }
-            //========================== STAR_SIZE_END
-
-            //========================== RELATIVE_TIME_START
-            // Calculate "relative-time"
-            // Convert the minutes to milliseconds
-            let the_skyfall = minutes_to_star *60*1000;
-            // Add the time of the message + milliseconds to when star will fall
-            let when_it_crumbles = Number(tsCell.textContent) + the_skyfall;
-            // Get the current time of export to the last whole minute
-            let we_will_stand_tall = Math.floor((Date.now()/1000)/60)*60*1000;
-            // Minus the time when the star will fall to current time
-            let face_it_all_together = when_it_crumbles - we_will_stand_tall;
-            // Convert the time milliseconds back to minutes
-            let at_skyfall = face_it_all_together/60/1000;
-            let esStarfall = at_skyfall;
-            // Catch all, of 1 minute as the minimum
-            if(at_skyfall < 1){
-                at_skyfall = 1;
-            }
-            if(isNaN(at_skyfall)){
-                at_skyfall = 1;
-            }
-            //console.log(at_skyfall)
-            //========================== RELATIVE_TIME_END
-
-            //========================== DATA TO SEND TO DISCORD
-            // Format  /call world: 50 region: Kharidian Desert size: 8 relative-time: 50
-            // Generate the formatted string
-            let generatedString = `/call world: ${column1Data} region: ${location_of_star} size: ${size_of_star} relative-time: ${at_skyfall}`;
-            //========================== DISCORD_END
-            
-            //========================== EXPORT_STATUS_START
-            // Process 'ES' Colour Statuses, Bootstrap color names
-            let finalStatusCount = 0;
-            esCell.classList.add("no-wrap");//Fix for chrome, not needed in firefox.
-            esCell.textContent = " ";// Clear ES cell
-            // Check World
-            if(isNaN(column1Data) || column1Data >= 260){
-                colourCell(cell1, "danger");
-                colourCell(esCell, "danger");
-                colourCell(aCell, "danger");
-                esCell.textContent += "W";
-            }
-            else{
-                colourCell(cell1, "info");
-                finalStatusCount += 1;
-            }
-            // Check Transcript
-            if(isNaN(size_of_star) || location_of_star === "ERROR-UNDEF-LOC" || size_of_star === "ERROR-UNDEF-SIZE"){
-                if(location_of_star === "ERROR-UNDEF-LOC"){
-                    esCell.textContent += "L";
-                }
-                if(size_of_star !== "Small" && size_of_star !== "Average" && size_of_star !== "Big"){
-                    colourCell(cell2, "danger");
-                    colourCell(esCell, "danger");
-                    colourCell(aCell, "danger");
-                    esCell.textContent += "S";
-                }
-                else{
-                    colourCell(cell2, "info");
-                    finalStatusCount += 1;
-                }
-            }
-            else{
-                colourCell(cell2, "info");
-                finalStatusCount += 1;
-            }
-            // Success Status
-            if(finalStatusCount === 2){// All is ok
-                colourCell(cell1, "info");
-                colourCell(cell2, "info");
-                colourCell(esCell, "success");
-                colourCell(aCell, "success");
-            }
-            // Update Status Colour, for Time <= 1
-            esStarfall = esStarfall * -1;// FLIP POS NEG
-            esStarfall = (esStarfall<0?"":"+") + esStarfall
-            if(at_skyfall === 1 && finalStatusCount === 2){ // Add time in minus to status on export
-                esCell.textContent += `[T${esStarfall}]`;
-                colourCell(esCell, "warning");
-                colourCell(cell2, "warning");
-            }
-            else if(at_skyfall === 1){ // Keep ES colour in Error state
-                esCell.textContent += `[T${esStarfall}]`;
-                colourCell(cell2, "warning");
-            }
-            else{
-                esCell.textContent += `[T${esStarfall}]`; // Positive time T-MINUS, not yet T+PLUS
-            }
-
-            // Handle Over Time, Time > 2 hours not possible, 120mins
-            if(minutes_to_star >= 121){
-                esCell.textContent += " OT"
-                colourCell(cell2, "danger");
-                colourCell(esCell, "danger");
-                colourCell(aCell, "danger");
-            }
-
-            //========================== EXPORT_STATUS_END
-
-            // Copy to clipboard
-            navigator.clipboard.writeText(generatedString).then(() => {
-                //alert("Copied to clipboard: " + generatedString);
-                console.info("Copied to clipboard: ", generatedString);
-            }).catch((err) => {
-                console.error("Error copying to clipboard: ", err);
-            });
-        }
-        //========================== MAIN_GEN_FUNCTION_START
-        
-        //========================== GENERAL_HELPER_FUNCTIONS_START
-        // Replace OCR mistaken Letters for Numbers
-        function replaceOCRN(input) { 
-            let processedOCRN = input.replace(/\s+/g, '') // Remove spaces
-                                     .replace(/I/g, '1')   // Replace I with 1
-                                     .replace(/O/gi, '0')   // Replace Oo with 0
-                                     .replace(/S/gi, '5')   // Replace Ss with 5
-                                     .replace(/Z/gi, '2')   // Replace Zz with 2
-                                     .replace(/B/g, '8')   // Replace capital B with 8
-                                     .replace(/g/g, '9')   // Replace lowercase g with 9
-                                     .replace(/l/g, '1');   // Replace lowercase l with 1
-
-            //console.log(`processedOCRN: ${processedOCRN}`);
-            return processedOCRN;
-        }
-        // Function to colour cells for EXPORT_STATUS
-        // As per Bootstrap colors
-        function colourCell(cellFO, colourState){
-            if(colourState === "danger"){
-                cellFO.style.backgroundColor = "LightCoral";
-                cellFO.style.color = "Black";
-            }
-            else if(colourState === "info"){
-                cellFO.style.backgroundColor = "LightSkyBlue";
-                cellFO.style.color = "Black";
-            }
-            else if(colourState === "success"){
-                cellFO.style.backgroundColor = "PaleGreen";
-                cellFO.style.color = "Black";
-            }
-            else if(colourState === "warning"){
-                cellFO.style.backgroundColor = "#FED8B1";
-                cellFO.style.color = "Black";
-            }
-        }
-        // Extract the current world and convert string to manual format
-        function worldSplitter(input) { 
-            let worldInt = NaN;
-            if(input.search(/cape|caoe|cane/)>-1){
-                worldInt = parseInt( replaceOCRN(input.substring(input.search(/cape|caoe|cane/)+4,input.search(/cape|caoe|cane/)+10)), 10);
-            }
-            let processedInput = `${worldInt};${input}`;
-            return processedInput;
-        }
-        //========================== GENERAL_HELPER_FUNCTIONS_END
-        
-        //========================== BUTTONS_&_TEXTBOXES_START
-        // Event listener for the textbox button
-        document.getElementById("addRowBtn").addEventListener("click", function () {
-            // Get the input value from the textbox
-            let input = document.getElementById("csvInput").value;
-            handleInput(input);
-        });
-
-        // Event listener for the prompt button
-        document.getElementById("addRowBtnPrpt").addEventListener("click", function () {
-            // Prompt the user to enter CSV data
-            let input = prompt("Enter text in DSV format (e.g., World;Transcript):");
-            handleInput(input);
-        });
-        
-        // Event listener for the prompt button EXPERIMENTAL fullparse
-        document.getElementById("addRowFullParse").addEventListener("click", function () {
-            // Prompt the user to enter CSV data
-            let input = prompt("Enter transcript with FL world number:");
-            handleInput(worldSplitter(input));
-        });
-        // Function for the textarea onpaste
-        function onPasteExp(){
-            setTimeout(function() {
-                let input = document.getElementById("expInput").value;
-                if(input.substring(0,input.indexOf(";")) > 0 && input.indexOf("/call") === -1){
-                    // Old format, 12;Star_Transcript
-                    handleInput(input); // Straight through to old handleInput.
-                }
-                else if (input.indexOf("/call") > -1){
-                    // '/call' pasted
-                    console.log("Detected /call pasted");
-                    // Future update.
-                }
-                else if (input === ""){
-                    console.log("empty string");
-                }
-                else{
-                    // New Format.
-                    handleInput(worldSplitter(input));
-                }
-                document.getElementById("expInput").value = "";
-            }, 0); // Delay of 0 milliseconds to ensure it runs after 
-        }
-        function setOnPastePlaceholder(){
-            document.getElementById("expInput").placeholder = "PASTE AREA, Paste here!                                                                                  You see a shooting star! ... ... looks to be size 10. Friends List RuneScape 39";
-        }
-        //========================== BUTTONS_&_TEXTBOXES_END
-        
-        //========================== ACTIVITY_INDICATOR_START
-        function activityColourFlipper(){
-            if(activityIndColour === 0){
-                activityIndColour = 1;
-                document.getElementById('statusCell').style.backgroundColor = 'lightblue';
-                document.getElementById('statusCell').placeholder = "  🔭"
-            }
-            else{
-                activityIndColour = 0;
-                document.getElementById('statusCell').style.backgroundColor = 'lightgreen';
-                document.getElementById('statusCell').placeholder = "  ☄️"
-            }
-        }
-    
-        function activityUpdate(){
-            document.getElementById('status_lastworld').innerHTML = "Last World Scoped: " + lastWorldScoped;
-            if(activityIndChange !== lastWorldScoped){
-                activityColourFlipper();
-                activityIndChange = lastWorldScoped;
-            }
-            else{
-                activityIndChange = lastWorldScoped;
-            }
-        }
-        //========================== ACTIVITY_INDICATOR_END
-        
-        //========================== UTC_CLOCK_START
-        function startUTCClock() {
-            const today = new Date();
-            let h = today.getUTCHours();
-            let m = today.getUTCMinutes();
-            //let s = today.getSeconds();
-            h = checkTime(h);
-            m = checkTime(m);
-            //s = checkTime(s);
-            document.getElementById('utc_clock').innerHTML = "<a title=\"The current in-game time\">UTC:</a> " + h + ":" + m;
-            setTimeout(startUTCClock, 1000);//60000=1min
-        }
-
-        function checkTime(i) {
-            if (i < 10) {i = "0" + i};  // Add zero in front of numbers < 10
-            return i;
-        }
-        //========================== UTC_CLOCK_END
-        
-        //========================== THEME_BUTTONS_START
-        document.getElementById("toggleTheme").addEventListener("click", function () {
-            document.getElementsByTagName("body")[0].classList.toggle("darktheme");
-            document.getElementsByTagName("input")[0].classList.toggle("darktheme");
-            document.getElementsByTagName("input")[4].classList.toggle("darkthemeTextBox");//1
-            document.getElementsByTagName("textarea")[0].classList.toggle("darkthemeTextBox");
-            document.getElementById("input_header").classList.toggle("ih_default");
-            document.getElementById("input_header").classList.toggle("darktheme");
-        });
-        document.getElementById("toggleMonospace").addEventListener("click", function () {
-            // Toggle monospace font
-            document.getElementsByTagName("body")[0].classList.toggle("monospace");
-        });
-        //========================== THEME_BUTTONS_END
-
-        //========================== SETTINGS_BOX_START
-        document.getElementById("chbx1").addEventListener("click", funcChb1);
-        document.getElementById("chbx2").addEventListener("click", funcChb2);
-        document.getElementById("chbx3").addEventListener("click", funcChb3);
-        function funcChb1() {
-            //input_header
-            if(document.getElementById("chbx1").checked){
-                document.getElementById("input_header").classList.add("input_header");
-            }
-            else{
-                document.getElementById("input_header").classList.remove("input_header");
-            }
-        }
-        function funcChb2() {
-            return document.getElementById("chbx2").checked;
-        }
-        function funcChb3() {
-            return document.getElementById("chbx3").checked;
-        }
-        //========================== SETTINGS_BOX_END
-
-        //========================== LOAD_AT_PAGELOAD
-        window.addEventListener("load", setOnPastePlaceholder);//For Safari.
-        window.addEventListener("load", startUTCClock);// Load UTC clock when page is fully loaded
-        window.addEventListener("load", activityUpdate);//trigger once for UI
-        window.addEventListener("load", funcChb1);// Initial input header
-        window.addEventListener("load", funcChb2);// Generate on paste
-        window.addEventListener("load", funcChb3);// Invert table entry
-    </script>
+</script>
 </body>
 </html>
